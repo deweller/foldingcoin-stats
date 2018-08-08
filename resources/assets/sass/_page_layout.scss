@@ -1,0 +1,51 @@
+html {
+    position: relative;
+    background-image: linear-gradient(to right, rgb(211, 21, 17) 0%, rgb(129, 0, 0) 100%);
+}
+
+#app {
+    background: $content-bg;
+    min-height: 500px;
+}
+
+.navbar__nav-link--strong {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.footer {
+    border-top: 1px solid rgb(129, 0, 0);
+    padding-top: 18px;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.85rem;
+
+    a {
+        color: rgba(255,255,255,0.75);
+        text-decoration: underline;
+    }
+    a:hover {
+        color: rgba(255,255,255,1);
+        text-decoration: underline;
+    }
+}
+
+.footer__disclaimer {
+    font-size: 0.8rem;
+}
+
+.footer__communities-row {
+}
+
+.footer__community-logo {
+    text-align: center;
+}
+.footer__community-img {
+    max-height: 80px;
+}
+
+
+.navbar-brand__logo {
+    width: 25px;
+    margin-right: 10px;
+    margin-top: -2px;
+}
