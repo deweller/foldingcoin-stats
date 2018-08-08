@@ -21,7 +21,7 @@ class CreateFoldingStatsTable extends Migration
             $table->integer('points')->default(0);
             $table->integer('work_units')->default(0);
 
-            $table->timestamp('start_date');
+            $table->timestamp('start_date')->nullable();
             $table->tinyInteger('period_type');
 
             $table->foreign('member_id')->references('id')->on('folding_members')->onDelete('cascade');
