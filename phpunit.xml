@@ -23,6 +23,9 @@
         </whitelist>
     </filter>
     <php>
+        <!-- placeholder app key for testing -->
+        <env name="APP_KEY" value="base64:6w/3NrtF7EQ0wm0E8Vmkw9SWwq/g7/9B9ykdXvyogJg="/>
+
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
