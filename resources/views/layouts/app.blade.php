@@ -33,10 +33,10 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link navbar__nav-link--strong" href="{{ route('teams.index') }}"><i class="fas fa-xs fa-people-carry"></i> {{ __('Teams') }}</a>
+                            <a class="nav-link navbar__nav-link--strong" href="{{ route('members.index') }}"><i class="fas fa-xs fa-user"></i> {{ __('Members') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link navbar__nav-link--strong" href="{{ route('members.index') }}"><i class="fas fa-xs fa-user"></i> {{ __('Members') }}</a>
+                            <a class="nav-link navbar__nav-link--strong" href="{{ route('teams.index') }}"><i class="fas fa-xs fa-people-carry"></i> {{ __('Teams') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link navbar__nav-link--strong" target="_blank" href="https://foldingcoin.net"><i class="fas fa-xs fa-link"></i> {{ __('About FoldingCoin') }}</a>
