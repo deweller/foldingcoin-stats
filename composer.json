@@ -11,6 +11,7 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.6.0",
         "tokenly/api-client": "^1.0",
+        "tokenly/fluentd-logger": "^1.2",
         "tokenly/laravel-api-provider": "^3.3",
         "tokenly/platform-admin": "^4.0"
     },
