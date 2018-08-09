@@ -19,5 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function () {
     Route::get('/stats/all', 'Api\StatsController@all')->name('api.stats.all');
+    
+    Route::get('/members', 'Api\MembersController@index')->name('api.members.index');
 });
 

@@ -2,7 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Models\FoldingStat;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Tokenly\LaravelApiProvider\Filter\RequestFilter;
 use Tokenly\LaravelApiProvider\Repositories\BaseRepository;
 
 /*
@@ -31,7 +35,6 @@ class FoldingMemberRepository extends BaseRepository
             ->select(['user_name', 'team_number', 'id'])
             ->get();
 
-
         return $collection->mapWithKeys(function ($m) {
             return [$m->user_name . '|' . $m->team_number => $m->id];
         });
@@ -44,6 +47,8 @@ class FoldingMemberRepository extends BaseRepository
             ->where('team_number', '=', $team_number)
             ->first();
     }
+
+
 }
 
 // $table->string('user_name', 80)->index();

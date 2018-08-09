@@ -7,6 +7,6 @@ use Exception;
 
 class FoldingMember extends APIModel {
 
-    protected $api_attributes = ['name',];
+    protected $api_attributes = ['user_name', 'friendly_name', 'bitcoin_address', 'team_number'];
 
 }

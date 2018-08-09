@@ -7,6 +7,7 @@ use App\Models\FoldingStat;
 use App\Repositories\FoldingMemberRepository;
 use App\Repositories\FoldingStatRepository;
 use App\Repositories\FoldingTeamRepository;
+use App\Repositories\MemberAggregateStatRepository;
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -19,12 +20,13 @@ use Tokenly\LaravelEventLog\Facade\EventLog;
 class MembersSynchronizer
 {
 
-    public function __construct(StatsDownloadAPIClient $stats_api_client, FoldingMemberRepository $folding_member_repository, FoldingStatRepository $folding_stat_repository, FoldingTeamRepository $folding_team_repository)
+    public function __construct(StatsDownloadAPIClient $stats_api_client, FoldingMemberRepository $folding_member_repository, FoldingStatRepository $folding_stat_repository, FoldingTeamRepository $folding_team_repository, MemberAggregateStatRepository $member_aggregate_stat_repository)
     {
         $this->stats_api_client = $stats_api_client;
         $this->folding_member_repository = $folding_member_repository;
         $this->folding_stat_repository = $folding_stat_repository;
         $this->folding_team_repository = $folding_team_repository;
+        $this->member_aggregate_stat_repository = $member_aggregate_stat_repository;
     }
 
     public function synchronizeDateRange(Carbon $start_date, Carbon $end_date)
@@ -56,8 +58,12 @@ class MembersSynchronizer
             // increment
             $working_date->addHour(1);
         }
+
+        // always sync aggregate stats after updating member stats records
+        $this->member_aggregate_stat_repository->aggregateStats();
     }
 
+    // public for testing only - use synchronizeDateRange
     public function synchronizeMemberStats(Carbon $start_date, $period_type)
     {
         $start_date = $start_date->copy()->startOfHour();

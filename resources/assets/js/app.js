@@ -21,6 +21,29 @@ window.Vue = require('vue');
 Vue.component('home-chart-component', require('./components/HomeChartComponent.vue'));
 Vue.component('error-panel', require('./components/ErrorPanelComponent.vue'));
 
+Vue.component('member-list', require('./components/MemberListComponent.vue'));
+
+// vue filters
+Vue.filter('shortbitcoinaddress', function (value) {
+    if (value == null || value.length == 0) {
+        return ''
+    }
+
+    value = value.toString()
+    return value.substr(0, 6) + '…' + value.substr(-4, value.length)
+})
+
+let numeral = require('numeral')
+Vue.filter('points', function (value) {
+    if (value == null || value.length == 0) {
+        return ''
+    }
+
+    value = value.toString()
+    return numeral(value).format('0,0')
+})
+
+
 const app = new Vue({
     el: '#app'
 });

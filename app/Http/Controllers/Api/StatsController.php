@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Repositories\FoldingStatRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 
-class StatsController extends Controller
+class StatsController extends ApiController
 {
     public function all(Request $request, FoldingStatRepository $stats_repository)
     {
@@ -37,7 +36,7 @@ class StatsController extends Controller
         }
 
         $aggregate_stats = $stats_repository->aggregatePointsByDateAndPeriod($start_date, $end_date, $valid_attributes['period']);
-        $aggregate_stats = $aggregate_stats->map(function($s) {
+        $aggregate_stats = $aggregate_stats->map(function ($s) {
             $s->start_date = Carbon::parse($s->start_date)->toIso8601String();
             return $s;
         });

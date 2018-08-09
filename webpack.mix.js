@@ -20,6 +20,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'highcharts',
         'moment',
         'moment-timezone',
+        'numeral',
     ])
    .sass('resources/assets/sass/app.scss', 'public/css')
 
