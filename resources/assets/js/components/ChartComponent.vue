@@ -149,7 +149,7 @@
                     text: opts.yAxisTitle || '',
                 }
             },
-            colors: ["#900000", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"],
+            colors: ["#900000ff", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"],
             plotOptions: {
                 area: {
                     fillColor: {
@@ -160,8 +160,15 @@
                             y2: 1
                         },
                         stops: [
-                            [0, "#810000"],
-                            [1, "#D31511"]
+                            // 810000  dark red
+                            // D31511  light red
+                            // F25C58  alt1 light red
+                            // 
+                            [0, "#810000e0"], // dark red
+                            [0.40, "#D31511c0"], // light red
+                            [0.60, "#D31511c0"], // light red
+                            [1, "#810000d0"], // light red with more transparency
+
                         ]
                     },
                     marker: {

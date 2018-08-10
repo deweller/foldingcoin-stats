@@ -33,6 +33,9 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
+                            <a class="nav-link navbar__nav-link--strong" href="{{ route('welcome') }}"><i class="fas fa-xs fa-chart-line"></i> {{ __('Stats') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link navbar__nav-link--strong" href="{{ route('members.index') }}"><i class="fas fa-xs fa-user"></i> {{ __('Members') }}</a>
                         </li>
                         <li class="nav-item">

@@ -8,7 +8,7 @@
 
             <chart-component
                 stats-url="/api/v1/stats/all"
-                y-axis-title="Cumulative Points"
+                y-axis-title="Total daily FAH points"
             ></chart-component>
         </div>
     </div>

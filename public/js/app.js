@@ -23305,7 +23305,7 @@ var render = function() {
           _c("chart-component", {
             attrs: {
               "stats-url": "/api/v1/stats/member/" + _vm.member.userName,
-              "y-axis-title": "points for " + _vm.member.friendlyName
+              "y-axis-title": "Daily points for " + _vm.member.friendlyName
             }
           })
         ],
@@ -23690,7 +23690,7 @@ function buildChart(opts) {
                 text: opts.yAxisTitle || ''
             }
         },
-        colors: ["#900000", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"],
+        colors: ["#900000ff", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"],
         plotOptions: {
             area: {
                 fillColor: {
@@ -23700,7 +23700,15 @@ function buildChart(opts) {
                         x2: 0,
                         y2: 1
                     },
-                    stops: [[0, "#810000"], [1, "#D31511"]]
+                    stops: [
+                    // 810000  dark red
+                    // D31511  light red
+                    // F25C58  alt1 light red
+                    // 
+                    [0, "#810000e0"], // dark red
+                    [0.40, "#D31511c0"], // light red
+                    [0.60, "#D31511c0"], // light red
+                    [1, "#810000d0"]]
                 },
                 marker: {
                     radius: 1
@@ -23986,7 +23994,7 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-8" }, [
               _c("h4", { staticClass: "mb-3" }, [
-                _c("i", { staticClass: "fa fa-user mr-2" }),
+                _c("i", { staticClass: "fa fa-people-carry mr-2" }),
                 _vm._v(" Information for " + _vm._s(_vm.team.name))
               ]),
               _vm._v(" "),
@@ -24039,7 +24047,7 @@ var render = function() {
           _c("chart-component", {
             attrs: {
               "stats-url": "/api/v1/stats/team/" + _vm.team.number,
-              "y-axis-title": "points for " + _vm.team.name
+              "y-axis-title": "Daily points for " + _vm.team.name
             }
           })
         ],

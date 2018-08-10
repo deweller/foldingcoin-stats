@@ -7,7 +7,7 @@
 
         <div class="row">
             <div class="col-md-8">
-                <h4 class="mb-3"><i class="fa fa-user mr-2"></i> Information for {{ team.name }}</h4>
+                <h4 class="mb-3"><i class="fa fa-people-carry mr-2"></i> Information for {{ team.name }}</h4>
                 <table class="table table-sm table-striped">
                     <thead>
                     </thead>
@@ -42,7 +42,7 @@
         <h2 class="mt-3">Points</h2>
         <chart-component
             :stats-url="'/api/v1/stats/team/'+team.number"
-            :y-axis-title="'points for ' + team.name"
+            :y-axis-title="'Daily points for ' + team.name"
         ></chart-component>
 
     </div>

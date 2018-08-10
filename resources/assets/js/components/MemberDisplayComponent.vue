@@ -64,7 +64,7 @@
         <h2 class="mt-3">Points</h2>
         <chart-component
             :stats-url="'/api/v1/stats/member/'+member.userName"
-            :y-axis-title="'points for ' + member.friendlyName"
+            :y-axis-title="'Daily points for ' + member.friendlyName"
         ></chart-component>
 
     </div>
