@@ -95,7 +95,7 @@ class StatsController extends ApiController
     }
 
 
-    protected function buildStatsResponse($start_date, $end_date, $period, $member_ids)
+    protected function buildStatsResponse($start_date, $end_date, $period, $member_ids = null)
     {
         $stats_repository = app(FoldingStatRepository::class);
 
