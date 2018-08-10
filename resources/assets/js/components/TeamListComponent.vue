@@ -5,28 +5,28 @@
             :errormsg="errorMsg"
         ></error-panel>
 
-        <div :class="{loading: loading}" v-if="members.length > 0 || loading || paging.isSearch">
-            <h3>FoldingCoin Participants</h3>
+        <div :class="{loading: loading}" v-if="teams.length > 0 || loading || paging.isSearch">
+            <h3>FoldingCoin Teams</h3>
 
             <form @submit.prevent="doSearch" class="mt-4 mb-2">
                 <h5>Filter Results</h5>
                 <div class="form-row align-items-center">
                     <div class="col-md-3">
-                        <label class="sr-only" for="SearchUsername">Username</label>
+                        <label class="sr-only" for="SearchName">Name</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">Username</div>
+                                <div class="input-group-text">Name</div>
                             </div>
-                            <input v-model="searchUsername" type="text" class="form-control" id="SearchUsername" placeholder="">
+                            <input v-model="searchName" type="text" class="form-control" id="SearchName" placeholder="">
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label class="sr-only" for="SearchBitcoinAddress">Bitcoin Address</label>
+                        <label class="sr-only" for="SearchTeamNumber">Team Number</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">Address</div>
+                                <div class="input-group-text">Team Number</div>
                             </div>
-                            <input v-model="searchBitcoinAddress" type="text" class="form-control" id="SearchBitcoinAddress" placeholder="">
+                            <input v-model="searchNumber" type="text" class="form-control" id="SearchTeamNumber" placeholder="">
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -36,13 +36,15 @@
                 </div>
             </form>
 
-            <table v-if="members.length > 0" class="table table-sm">
+            <table v-if="teams.length > 0" class="table table-sm">
                 <thead>
                     <tr>
-                        <th><a @click="pager.toggleSort('userName', 'asc')" href="#sort">
-                            <i v-if="paging.sort == 'userName'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
-                            Username</a></th>
-                        <th>Address</th>
+                        <th><a @click="pager.toggleSort('name', 'asc')" href="#sort">
+                            <i v-if="paging.sort == 'name'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
+                            Name</a></th>
+                        <th><a @click="pager.toggleSort('number', 'asc')" href="#sort">
+                            <i v-if="paging.sort == 'number'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
+                            Team Number</a></th>
                         <th><a @click="pager.toggleSort('dayPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'dayPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             24h Points</a></th>
@@ -56,21 +58,21 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="member in members">
-                        <td><a :href="'/member/'+member.userName">{{ member.friendlyName }}</a></td>
-                        <td><span :title="member.bitcoinAddress">{{ member.bitcoinAddress | shortbitcoinaddress }}</span></td>
+                    <tr v-for="team in teams">
+                        <td><a :href="'/team/'+team.number">{{ team.name }}</a></td>
+                        <td><a :href="'/team/'+team.number">{{ team.number }}</a></td>
 
-                        <td>{{ member.dayPoints | points }}</td>
-                        <td>{{ member.weekPoints | points }}</td>
-                        <td>{{ member.allPoints | points }}</td>
+                        <td>{{ team.dayPoints | points }}</td>
+                        <td>{{ team.weekPoints | points }}</td>
+                        <td>{{ team.allPoints | points }}</td>
                     </tr>
                 </tbody>
             </table>
-            <div v-if="members.length == 0" class="">
+            <div v-if="teams.length == 0" class="">
                 <p>No results found for this search.</p>
             </div>
 
-            <div class="text-center" v-if="paging.count > 0">Showing {{ members.length }} of {{ paging.count }} Folding Members</div>
+            <div class="text-center" v-if="paging.count > 0">Showing {{ teams.length }} of {{ paging.count }} Folding Teams</div>
             <div v-if="paging.pageCount > 1">
                 <nav aria-label="Page navigation">
                   <ul class="pagination justify-content-center">
@@ -86,8 +88,8 @@
             </div>
         </div>
 
-        <!-- no members -->
-        <div v-else>No members are available to show.</div>
+        <!-- no teams -->
+        <div v-else>No teams are available to show.</div>
 
     </div>
 </template>
@@ -101,13 +103,13 @@
             return {
                 errorMsg: null,
                 
-                members: [],
+                teams: [],
                 paging: {},
 
                 loading: false,
 
-                searchUsername: '',
-                searchBitcoinAddress: '',
+                searchName: '',
+                searchNumber: '',
             }
         },
         methods: {
@@ -119,7 +121,7 @@
 
             },
 
-            async loadMemberData() {
+            async loadTeamData() {
                 this.loading = true
                 this.pager.load()
             },
@@ -128,27 +130,27 @@
                 this.loading = true
             },
 
-            onLoadComplete(members, paging) {
-                this.members = members
+            onLoadComplete(teams, paging) {
+                this.teams = teams
                 this.paging = paging
                 this.loading = false
             },
 
             doSearch() {
                 let vars = {}
-                if (this.searchUsername.length > 0) {
-                    vars.userName = this.searchUsername
+                if (this.searchName.length > 0) {
+                    vars.name = this.searchName
                 }
-                if (this.searchBitcoinAddress.length > 0) {
-                    vars.bitcoinAddress = this.searchBitcoinAddress
+                if (this.searchNumber.length > 0) {
+                    vars.number = this.searchNumber
                 }
                 
                 this.pager.search(vars)
             },
 
             clearSearch() {
-                this.searchUsername = ''
-                this.searchBitcoinAddress = ''
+                this.searchName = ''
+                this.searchNumber = ''
                 this.pager.search({})
             }
         },
@@ -160,14 +162,14 @@
                 onError: this.setError,
                 request: this.$request,
 
-                url: '/api/v1/members',
+                url: '/api/v1/teams',
                 defaultSort: 'allPoints',
                 defaultSortDirection: 'desc',
                 perPage: 10,
             })
 
 
-            this.loadMemberData()
+            this.loadTeamData()
         }
     }
 

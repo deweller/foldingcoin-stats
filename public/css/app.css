@@ -15711,3 +15711,9 @@ readers do not read off random characters that represent icons */
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.loading {
+  opacity: 0.10;
+  -webkit-transition: opacity 0.05s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
+}
+

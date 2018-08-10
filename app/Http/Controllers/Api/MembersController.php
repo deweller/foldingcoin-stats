@@ -36,17 +36,18 @@ class MembersController extends ApiController
     {
         return [
             'fields' => [
-                'username' => ['field' => 'username'],
-                'all_points' => ['sortField' => 'all_points', 'defaultSortDirection' => 'desc'],
-                'week_points' => ['sortField' => 'week_points', 'defaultSortDirection' => 'desc'],
-                'day_points' => ['sortField' => 'day_points', 'defaultSortDirection' => 'desc'],
+                'userName' => ['field' => 'friendly_name', 'sortField' => 'friendly_name', 'defaultSortDirection' => 'asc', 'assumeLike' => true,],
+                'bitcoinAddress' => ['field' => 'bitcoin_address',],
+                'allPoints' => ['sortField' => 'all_points', 'defaultSortDirection' => 'desc'],
+                'weekPoints' => ['sortField' => 'week_points', 'defaultSortDirection' => 'desc'],
+                'dayPoints' => ['sortField' => 'day_points', 'defaultSortDirection' => 'desc'],
             ],
             'limit' => [
                 'field' => 'limit', // optional
                 'max' => 50, // optional
                 'pagingField' => 'pg', // optional
             ],
-            'defaults' => ['sort' => 'all_points'],
+            'defaults' => ['sort' => 'allPoints'],
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Tokenly\LaravelApiProvider\Repositories\BaseRepository;
 
 /*
@@ -25,10 +26,9 @@ class FoldingStatRepository extends BaseRepository
         return $collection;
     }
 
-
-    public function aggregatePointsByDateAndPeriod(Carbon $start_date, Carbon $end_date, $period_type)
+    public function aggregatePointsByDateAndPeriod(Carbon $start_date, Carbon $end_date, $period_type, $member_ids = null)
     {
-        $collection = DB::table($this->prototype_model->getTable())
+        $query = DB::table($this->prototype_model->getTable())
             ->select([
                 'start_date',
                 DB::raw('SUM(points) AS points'),
@@ -38,9 +38,13 @@ class FoldingStatRepository extends BaseRepository
             ->where('start_date', '<=', $end_date)
             ->where('period_type', '=', $period_type)
 
-            ->groupBy('start_date')
+            ->groupBy('start_date');
 
-            ->get();
+        if ($member_ids !== null) {
+            $query->whereIn('member_id', $member_ids);
+        }
+
+        $collection = $query->get();
 
         return $collection;
     }

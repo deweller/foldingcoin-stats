@@ -17,6 +17,7 @@ class CreateFoldingStatsTable extends Migration
             $table->increments('id');
 
             $table->integer('member_id')->unsigned()->index();
+            $table->integer('team_id')->unsigned()->index();
             
             $table->integer('points')->default(0);
             $table->integer('work_units')->default(0);
@@ -25,6 +26,7 @@ class CreateFoldingStatsTable extends Migration
             $table->tinyInteger('period_type');
 
             $table->foreign('member_id')->references('id')->on('folding_members')->onDelete('cascade');
+            $table->foreign('team_id')->references('id')->on('folding_teams')->onDelete('cascade');
 
             $table->index(['start_date', 'period_type']);
             $table->unique(['start_date', 'member_id', 'period_type']);

@@ -8,6 +8,7 @@ use App\Repositories\FoldingMemberRepository;
 use App\Repositories\FoldingStatRepository;
 use App\Repositories\FoldingTeamRepository;
 use App\Repositories\MemberAggregateStatRepository;
+use App\Repositories\TeamAggregateStatRepository;
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -20,13 +21,14 @@ use Tokenly\LaravelEventLog\Facade\EventLog;
 class MembersSynchronizer
 {
 
-    public function __construct(StatsDownloadAPIClient $stats_api_client, FoldingMemberRepository $folding_member_repository, FoldingStatRepository $folding_stat_repository, FoldingTeamRepository $folding_team_repository, MemberAggregateStatRepository $member_aggregate_stat_repository)
+    public function __construct(StatsDownloadAPIClient $stats_api_client, FoldingMemberRepository $folding_member_repository, FoldingStatRepository $folding_stat_repository, FoldingTeamRepository $folding_team_repository, MemberAggregateStatRepository $member_aggregate_stat_repository, TeamAggregateStatRepository $team_aggregate_stat_repository)
     {
         $this->stats_api_client = $stats_api_client;
         $this->folding_member_repository = $folding_member_repository;
         $this->folding_stat_repository = $folding_stat_repository;
         $this->folding_team_repository = $folding_team_repository;
         $this->member_aggregate_stat_repository = $member_aggregate_stat_repository;
+        $this->team_aggregate_stat_repository = $team_aggregate_stat_repository;
     }
 
     public function synchronizeDateRange(Carbon $start_date, Carbon $end_date)
@@ -61,6 +63,7 @@ class MembersSynchronizer
 
         // always sync aggregate stats after updating member stats records
         $this->member_aggregate_stat_repository->aggregateStats();
+        $this->team_aggregate_stat_repository->aggregateStats();
     }
 
     // public for testing only - use synchronizeDateRange
@@ -93,8 +96,8 @@ class MembersSynchronizer
         $this->synchronizeMemberRecords($existing_members_by_key, $new_members_by_key);
 
         // member record stats
-        $existing_member_ids_by_key = $this->folding_member_repository->allMemberIdsByUniqueKey();
-        $this->synchronizeMemberStatRecords($new_members_by_key, $existing_member_ids_by_key, $start_date, $period_type);
+        $existing_member_and_team_ids_by_key = $this->folding_member_repository->allMemberAndTeamIdsByUniqueKey();
+        $this->synchronizeMemberStatRecords($new_members_by_key, $existing_member_and_team_ids_by_key, $start_date, $period_type);
     }
 
     // recent
@@ -213,7 +216,7 @@ class MembersSynchronizer
         // }
     }
 
-    protected function synchronizeMemberStatRecords($new_members_by_key, $existing_member_ids_by_key, Carbon $start_date, $period_type)
+    protected function synchronizeMemberStatRecords($new_members_by_key, $existing_member_and_team_ids_by_key, Carbon $start_date, $period_type)
     {
 
         // load existing stats for this time period
@@ -224,12 +227,12 @@ class MembersSynchronizer
 
         // build new stats for this time period
         $start_date_string = (string) $start_date;
-        $new_stats_by_key = $new_members_by_key->keyBy(function ($stat) use ($existing_member_ids_by_key, $start_date_string, $period_type) {
-            $member_id = $existing_member_ids_by_key[$stat['userName'] . '|' . $stat['teamNumber']] ?? null;
-            if ($member_id === null) {
+        $new_stats_by_key = $new_members_by_key->keyBy(function ($stat) use ($existing_member_and_team_ids_by_key, $start_date_string, $period_type) {
+            $member_and_team_id = $existing_member_and_team_ids_by_key[$stat['userName'] . '|' . $stat['teamNumber']] ?? null;
+            if ($member_and_team_id === null) {
                 throw new Exception("Unable to find team for user name {$stat['userName']} and team number {$stat['teamNumber']}", 1);
             }
-            return $member_id . '|' . $start_date_string;
+            return $member_and_team_id['id'] . '|' . $start_date_string;
         });
         // echo "\$new_stats_by_key for $start_date: ".json_encode($new_stats_by_key, 192)."\n";
 
@@ -245,7 +248,8 @@ class MembersSynchronizer
             $new_stat_vars = $new_stats_by_key[$stat_key];
 
             $stat = $this->folding_stat_repository->create([
-                'member_id' => $existing_member_ids_by_key[$new_stat_vars['userName'] . '|' . $new_stat_vars['teamNumber']],
+                'member_id' => $existing_member_and_team_ids_by_key[$new_stat_vars['userName'] . '|' . $new_stat_vars['teamNumber']]['id'],
+                'team_id' => $existing_member_and_team_ids_by_key[$new_stat_vars['userName'] . '|' . $new_stat_vars['teamNumber']]['team_id'],
 
                 'points' => $new_stat_vars['pointsGained'],
                 'work_units' => $new_stat_vars['workUnitsGained'],
@@ -266,7 +270,9 @@ class MembersSynchronizer
         foreach ($stat_keys_to_update as $stat_key) {
             $new_stat_vars = $new_stats_by_key[$stat_key];
             $stat = $existing_stats_by_key[$stat_key];
-            $member_id = $existing_member_ids_by_key[$new_stat_vars['userName'] . '|' . $new_stat_vars['teamNumber']] ?? null;
+            $member_and_team_id = $existing_member_and_team_ids_by_key[$new_stat_vars['userName'] . '|' . $new_stat_vars['teamNumber']];
+            $member_id = $member_and_team_id['id'];
+            $team_id = $member_and_team_id['team_id'];
 
             // echo "{$new_stat_vars['userName']} ?? {$stat->user_name}\n";
             if (
@@ -275,11 +281,13 @@ class MembersSynchronizer
                 or (string) $start_date != (string) $stat->start_date
                 or (string) $period_type != (string) $stat->period_type
                 or (string) $member_id != (string) $stat->member_id
+                or (string) $team_id != (string) $stat->team_id
             ) {
 
                 // is different
                 $update_vars = [
                     'member_id' => $member_id,
+                    'team_id' => $team_id,
                     'points' => $new_stat_vars['pointsGained'],
                     'work_units' => $new_stat_vars['workUnitsGained'],
                     'start_date' => $start_date,
@@ -290,6 +298,7 @@ class MembersSynchronizer
                 $this->folding_stat_repository->update($stat_model, $update_vars);
                 EventLog::debug('stat.updated', [
                     'member_id' => $stat->member_id,
+                    'team_id' => $stat->team_id,
                     'points' => $stat->points,
                     'start_date' => $stat->start_date,
                     'period_type' => $stat->period_type,

@@ -1,15 +1,15 @@
 webpackJsonp([1],{
 
-/***/ 141:
+/***/ 142:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(142);
-module.exports = __webpack_require__(179);
+__webpack_require__(143);
+module.exports = __webpack_require__(181);
 
 
 /***/ }),
 
-/***/ 142:
+/***/ 143:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -19,7 +19,7 @@ module.exports = __webpack_require__(179);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(143);
+__webpack_require__(144);
 
 window.Vue = __webpack_require__(16);
 
@@ -29,13 +29,17 @@ window.Vue = __webpack_require__(16);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var RequestPlugin = __webpack_require__(166).default;
+var RequestPlugin = __webpack_require__(167).default;
 Vue.use(RequestPlugin);
 
-Vue.component('home-chart-component', __webpack_require__(169));
-Vue.component('error-panel', __webpack_require__(173));
+Vue.component('chart-component', __webpack_require__(199));
+Vue.component('error-panel', __webpack_require__(174));
 
-Vue.component('member-list', __webpack_require__(176));
+Vue.component('member-list', __webpack_require__(177));
+Vue.component('member-display', __webpack_require__(196));
+
+Vue.component('team-list', __webpack_require__(205));
+Vue.component('team-display', __webpack_require__(202));
 
 // vue filters
 Vue.filter('shortbitcoinaddress', function (value) {
@@ -47,7 +51,7 @@ Vue.filter('shortbitcoinaddress', function (value) {
     return value.substr(0, 6) + '…' + value.substr(-4, value.length);
 });
 
-var numeral = __webpack_require__(184);
+var numeral = __webpack_require__(141);
 Vue.filter('points', function (value) {
     if (value == null || value.length == 0) {
         return '';
@@ -63,11 +67,11 @@ var app = new Vue({
 
 /***/ }),
 
-/***/ 143:
+/***/ 144:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(144);
+window._ = __webpack_require__(145);
 window.Popper = __webpack_require__(7).default;
 
 /**
@@ -79,7 +83,7 @@ window.Popper = __webpack_require__(7).default;
 try {
   window.$ = window.jQuery = __webpack_require__(8);
 
-  __webpack_require__(145);
+  __webpack_require__(146);
 } catch (e) {}
 // require('@fortawesome/fontawesome-free');
 
@@ -126,7 +130,7 @@ if (token) {
 
 /***/ }),
 
-/***/ 144:
+/***/ 145:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -17240,7 +17244,7 @@ if (token) {
 
 /***/ }),
 
-/***/ 145:
+/***/ 146:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -21191,12 +21195,12 @@ if (token) {
 
 /***/ }),
 
-/***/ 166:
+/***/ 167:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
 
@@ -21259,7 +21263,7 @@ function plugin(Vue) {
 
 /***/ }),
 
-/***/ 167:
+/***/ 168:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -21284,7 +21288,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(168);
+module.exports = __webpack_require__(169);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -21301,7 +21305,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 168:
+/***/ 169:
 /***/ (function(module, exports) {
 
 /**
@@ -22035,15 +22039,15 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 169:
+/***/ 174:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(170)
+var __vue_script__ = __webpack_require__(175)
 /* template */
-var __vue_template__ = __webpack_require__(172)
+var __vue_template__ = __webpack_require__(176)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -22060,7 +22064,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/HomeChartComponent.vue"
+Component.options.__file = "resources/assets/js/components/ErrorPanelComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -22069,9 +22073,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-dd528616", Component.options)
+    hotAPI.createRecord("data-v-20523ccc", Component.options)
   } else {
-    hotAPI.reload("data-v-dd528616", Component.options)
+    hotAPI.reload("data-v-20523ccc", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -22083,12 +22087,1350 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 170:
+/***/ 175:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        errormsg: String
+    }
+});
+
+/***/ }),
+
+/***/ 176:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.errormsg != null && _vm.errormsg.length > 0
+    ? _c(
+        "div",
+        {
+          staticClass: "alert alert-danger alert-dismissible fade show",
+          attrs: { role: "alert" }
+        },
+        [_vm._v("\n    " + _vm._s(_vm.errormsg) + "\n    "), _vm._m(0)]
+      )
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-20523ccc", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 177:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(178)
+/* template */
+var __vue_template__ = __webpack_require__(180)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/MemberListComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0743259e", Component.options)
+  } else {
+    hotAPI.reload("data-v-0743259e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 178:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+var Pager = __webpack_require__(179);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            errorMsg: null,
+
+            members: [],
+            paging: {},
+
+            loading: false,
+
+            searchUsername: '',
+            searchBitcoinAddress: ''
+        };
+    },
+
+    methods: {
+        setError: function setError(errorMsg) {
+            this.errorMsg = errorMsg;
+        },
+        showLoading: function showLoading() {},
+        loadMemberData: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                this.loading = true;
+                                this.pager.load();
+
+                            case 2:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function loadMemberData() {
+                return _ref.apply(this, arguments);
+            }
+
+            return loadMemberData;
+        }(),
+        onLoad: function onLoad() {
+            this.loading = true;
+        },
+        onLoadComplete: function onLoadComplete(members, paging) {
+            this.members = members;
+            this.paging = paging;
+            this.loading = false;
+        },
+        doSearch: function doSearch() {
+            var vars = {};
+            if (this.searchUsername.length > 0) {
+                vars.userName = this.searchUsername;
+            }
+            if (this.searchBitcoinAddress.length > 0) {
+                vars.bitcoinAddress = this.searchBitcoinAddress;
+            }
+
+            this.pager.search(vars);
+        },
+        clearSearch: function clearSearch() {
+            this.searchUsername = '';
+            this.searchBitcoinAddress = '';
+            this.pager.search({});
+        }
+    },
+
+    mounted: function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            this.pager = Pager.init({
+                                onLoad: this.onLoad,
+                                onLoadComplete: this.onLoadComplete,
+                                onError: this.setError,
+                                request: this.$request,
+
+                                url: '/api/v1/members',
+                                defaultSort: 'allPoints',
+                                defaultSortDirection: 'desc',
+                                perPage: 10
+                            });
+
+                            this.loadMemberData();
+
+                        case 2:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, this);
+        }));
+
+        function mounted() {
+            return _ref2.apply(this, arguments);
+        }
+
+        return mounted;
+    }()
+});
+
+/***/ }),
+
+/***/ 179:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["init"] = init;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function init(config) {
+    config = config || {};
+
+    var opts = {
+        url: config.url || null,
+
+        onError: config.onError || null,
+        onLoad: config.onLoad || null,
+        onLoadComplete: config.onLoadComplete || null,
+
+        $request: config.request || null,
+
+        perPage: config.perPage || 20
+    };
+
+    var currentPage = 0;
+    var currentPageCount = 0;
+    var currentSort = config.defaultSort || null;
+    var currentSortDirection = config.defaultSortDirection || 'desc';
+    var currentSearchVars = {};
+    var currentSearchExists = false;
+
+    var exports = {};
+
+    init = function init() {};
+
+    exports.prevPage = function () {
+        currentPage = currentPage - 1;
+        if (currentPage < 0) {
+            currentPage = 0;
+        }
+        exports.load();
+    };
+
+    exports.nextPage = function () {
+        currentPage = currentPage + 1;
+        if (currentPage > currentPageCount - 1) {
+            currentPage = currentPageCount - 1;
+        }
+        exports.load();
+    };
+
+    exports.goToPage = function (pg) {
+        // don't reload
+        if (currentPage == pg) {
+            return;
+        }
+
+        currentPage = pg;
+        if (currentPage < 0) {
+            currentPage = 0;
+        }
+        if (currentPage > currentPageCount - 1) {
+            currentPage = currentPageCount - 1;
+        }
+        exports.load();
+    };
+
+    exports.toggleSort = function (field, defaultDirection) {
+        var direction = defaultDirection || 'desc';
+        if (currentSort != null && field == currentSort) {
+            direction = currentSortDirection == 'asc' ? 'desc' : 'asc';
+        }
+
+        currentSort = field;
+        currentSortDirection = direction;
+
+        exports.load();
+    };
+
+    exports.search = function (searchVars) {
+        // save the search vars
+        currentSearchVars = searchVars;
+        currentSearchExists = false;
+        Object.keys(currentSearchVars).forEach(function (key, index) {
+            currentSearchExists = true;
+        });
+
+        // reset to page 0
+        currentPage = 0;
+
+        exports.load();
+    };
+
+    function buildRequestParams() {
+        var requestParams = {};
+
+        // page
+        requestParams.pg = currentPage;
+        requestParams.limit = opts.perPage;
+
+        // sort
+        requestParams.sort = currentSort + ' ' + currentSortDirection;
+
+        // search
+        Object.keys(currentSearchVars).forEach(function (key, index) {
+            requestParams[key] = currentSearchVars[key];
+        });
+
+        return requestParams;
+    }
+
+    exports.load = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var requestParams, sort, sortDirection, isSearch, response, paging;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+            while (1) {
+                switch (_context.prev = _context.next) {
+                    case 0:
+                        requestParams = buildRequestParams();
+
+                        // call onload
+
+                        if (opts.onLoad) {
+                            opts.onLoad(opts.url, requestParams);
+                        }
+
+                        // save these for returning the data
+                        sort = currentSort;
+                        sortDirection = currentSortDirection;
+                        isSearch = currentSearchExists;
+                        _context.next = 7;
+                        return opts.$request.get(opts.url, { params: requestParams }, opts.onError);
+
+                    case 7:
+                        response = _context.sent;
+
+
+                        // save paging
+                        currentPageCount = response.pageCount;
+                        currentPage = response.page;
+
+                        paging = {
+                            hasPrevious: !!(currentPage > 0),
+                            hasNext: !!(currentPage < currentPageCount - 1),
+                            isSearch: isSearch,
+
+                            sort: sort,
+                            sortDirection: sortDirection,
+
+                            page: response.page,
+                            perPage: response.perPage,
+                            pageCount: response.pageCount,
+                            count: response.count
+                        };
+
+
+                        if (opts.onLoadComplete) {
+                            opts.onLoadComplete(response.items, paging);
+                        }
+
+                    case 12:
+                    case 'end':
+                        return _context.stop();
+                }
+            }
+        }, _callee, this);
+    }));
+
+    init();
+
+    return exports;
+}
+
+/***/ }),
+
+/***/ 180:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("error-panel", { attrs: { errormsg: _vm.errorMsg } }),
+      _vm._v(" "),
+      _vm.members.length > 0 || _vm.loading || _vm.paging.isSearch
+        ? _c("div", { class: { loading: _vm.loading } }, [
+            _c("h3", [_vm._v("FoldingCoin Participants")]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                staticClass: "mt-4 mb-2",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.doSearch($event)
+                  }
+                }
+              },
+              [
+                _c("h5", [_vm._v("Filter Results")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-row align-items-center" }, [
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "sr-only",
+                        attrs: { for: "SearchUsername" }
+                      },
+                      [_vm._v("Username")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group mb-2" }, [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.searchUsername,
+                            expression: "searchUsername"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "SearchUsername",
+                          placeholder: ""
+                        },
+                        domProps: { value: _vm.searchUsername },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.searchUsername = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "sr-only",
+                        attrs: { for: "SearchBitcoinAddress" }
+                      },
+                      [_vm._v("Bitcoin Address")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group mb-2" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.searchBitcoinAddress,
+                            expression: "searchBitcoinAddress"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "SearchBitcoinAddress",
+                          placeholder: ""
+                        },
+                        domProps: { value: _vm.searchBitcoinAddress },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.searchBitcoinAddress = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-fldcdarkred mb-2",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Search")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary mb-2",
+                        attrs: { type: "button" },
+                        on: { click: _vm.clearSearch }
+                      },
+                      [_vm._v("Clear Search")]
+                    )
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm.members.length > 0
+              ? _c("table", { staticClass: "table table-sm" }, [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#sort" },
+                            on: {
+                              click: function($event) {
+                                _vm.pager.toggleSort("userName", "asc")
+                              }
+                            }
+                          },
+                          [
+                            _vm.paging.sort == "userName"
+                              ? _c("i", {
+                                  class: {
+                                    fa: true,
+                                    "fa-sort-down":
+                                      _vm.paging.sortDirection == "desc",
+                                    "fa-sort-up":
+                                      _vm.paging.sortDirection == "asc"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" \n                        Username")
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v("Address")]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#sort" },
+                            on: {
+                              click: function($event) {
+                                _vm.pager.toggleSort("dayPoints", "desc")
+                              }
+                            }
+                          },
+                          [
+                            _vm.paging.sort == "dayPoints"
+                              ? _c("i", {
+                                  class: {
+                                    fa: true,
+                                    "fa-sort-down":
+                                      _vm.paging.sortDirection == "desc",
+                                    "fa-sort-up":
+                                      _vm.paging.sortDirection == "asc"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" \n                        24h Points")
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#sort" },
+                            on: {
+                              click: function($event) {
+                                _vm.pager.toggleSort("weekPoints", "desc")
+                              }
+                            }
+                          },
+                          [
+                            _vm.paging.sort == "weekPoints"
+                              ? _c("i", {
+                                  class: {
+                                    fa: true,
+                                    "fa-sort-down":
+                                      _vm.paging.sortDirection == "desc",
+                                    "fa-sort-up":
+                                      _vm.paging.sortDirection == "asc"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" \n                        7d Points")
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#sort" },
+                            on: {
+                              click: function($event) {
+                                _vm.pager.toggleSort("allPoints", "desc")
+                              }
+                            }
+                          },
+                          [
+                            _vm.paging.sort == "allPoints"
+                              ? _c("i", {
+                                  class: {
+                                    fa: true,
+                                    "fa-sort-down":
+                                      _vm.paging.sortDirection == "desc",
+                                    "fa-sort-up":
+                                      _vm.paging.sortDirection == "asc"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" \n                        Total Points")
+                          ]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.members, function(member) {
+                      return _c("tr", [
+                        _c("td", [
+                          _c(
+                            "a",
+                            { attrs: { href: "/member/" + member.userName } },
+                            [_vm._v(_vm._s(member.friendlyName))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "span",
+                            { attrs: { title: member.bitcoinAddress } },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm._f("shortbitcoinaddress")(
+                                    member.bitcoinAddress
+                                  )
+                                )
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("points")(member.dayPoints)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("points")(member.weekPoints)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("points")(member.allPoints)))
+                        ])
+                      ])
+                    })
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.members.length == 0
+              ? _c("div", {}, [
+                  _c("p", [_vm._v("No results found for this search.")])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.paging.count > 0
+              ? _c("div", { staticClass: "text-center" }, [
+                  _vm._v(
+                    "Showing " +
+                      _vm._s(_vm.members.length) +
+                      " of " +
+                      _vm._s(_vm.paging.count) +
+                      " Folding Members"
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.paging.pageCount > 1
+              ? _c("div", [
+                  _c("nav", { attrs: { "aria-label": "Page navigation" } }, [
+                    _c(
+                      "ul",
+                      { staticClass: "pagination justify-content-center" },
+                      [
+                        _c(
+                          "li",
+                          {
+                            class: {
+                              "page-item": true,
+                              disabled: !_vm.paging.hasPrevious
+                            }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#", tabindex: "-1" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.pager.prevPage()
+                                  }
+                                }
+                              },
+                              [_vm._v("Previous")]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.paging.pageCount, function(pg) {
+                          return _c(
+                            "li",
+                            {
+                              class: {
+                                "page-item": true,
+                                active: _vm.paging.page == pg - 1
+                              }
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "page-link",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.pager.goToPage(pg - 1)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(pg))]
+                              )
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          {
+                            class: {
+                              "page-item": true,
+                              disabled: !_vm.paging.hasNext
+                            }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.pager.nextPage()
+                                  }
+                                }
+                              },
+                              [_vm._v("Next")]
+                            )
+                          ]
+                        )
+                      ],
+                      2
+                    )
+                  ])
+                ])
+              : _vm._e()
+          ])
+        : _c("div", [_vm._v("No members are available to show.")])
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Username")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Address")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0743259e", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 181:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 196:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(197)
+/* template */
+var __vue_template__ = __webpack_require__(198)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/MemberDisplayComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4434c4e8", Component.options)
+  } else {
+    hotAPI.reload("data-v-4434c4e8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 197:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        memberData: String
+    },
+    data: function data() {
+        return {
+            errorMsg: null,
+
+            member: {}
+        };
+    },
+
+    methods: {
+        setError: function setError(errorMsg) {
+            this.errorMsg = errorMsg;
+        }
+    },
+
+    mounted: function mounted() {
+        console.log('this.memberData', this.memberData);
+        this.member = JSON.parse(this.memberData);
+        console.log('this.member', this.member);
+    }
+});
+
+/***/ }),
+
+/***/ 198:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.member.userName
+    ? _c(
+        "div",
+        [
+          _c("error-panel", { attrs: { errormsg: _vm.errorMsg } }),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-5" }, [
+              _c("h4", { staticClass: "mb-3" }, [
+                _c("i", { staticClass: "fa fa-user mr-2" }),
+                _vm._v(" Information for " + _vm._s(_vm.member.friendlyName))
+              ]),
+              _vm._v(" "),
+              _c("table", { staticClass: "table table-sm table-striped" }, [
+                _c("thead"),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.member.friendlyName))])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.member.bitcoinAddress))])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("points")(_vm.member.allPoints)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("points")(_vm.member.weekPoints)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("points")(_vm.member.dayPoints)))
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-1" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-5" }, [
+              _vm._m(5),
+              _vm._v(" "),
+              _c("table", { staticClass: "table table-sm table-striped" }, [
+                _vm._m(6),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.member.teams, function(team) {
+                    return _c("tr", [
+                      _c("td", [
+                        _c("a", { attrs: { href: "/team/" + team.number } }, [
+                          _vm._v(_vm._s(team.name))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("a", { attrs: { href: "/team/" + team.number } }, [
+                          _vm._v(_vm._s(team.number))
+                        ])
+                      ])
+                    ])
+                  })
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "mt-3" }, [_vm._v("Points")]),
+          _vm._v(" "),
+          _c("chart-component", {
+            attrs: {
+              "stats-url": "/api/v1/stats/member/" + _vm.member.userName,
+              "y-axis-title": "points for " + _vm.member.friendlyName
+            }
+          })
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("User Name")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Bitcoin Address")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("All Time Points")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Points this Week")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Points in Last 24 hours")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", { staticClass: "mb-3" }, [
+      _c("i", { staticClass: "fa fa-people-carry mr-2" }),
+      _vm._v(" Teams")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Team Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Team Number")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4434c4e8", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 199:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(5)
+/* script */
+var __vue_script__ = __webpack_require__(200)
+/* template */
+var __vue_template__ = __webpack_require__(201)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/ChartComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-745aa594", Component.options)
+  } else {
+    hotAPI.reload("data-v-745aa594", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 200:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
 
@@ -22123,12 +23465,12 @@ var PERIOD_DAILY = 2;
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        statsBeginDate: String
+        statsUrl: String,
+        yAxisTitle: String
     },
     data: function data() {
         return {
             zoom: '30d',
-
             errorMsg: null
         };
     },
@@ -22140,10 +23482,8 @@ var PERIOD_DAILY = 2;
         btnClass: function btnClass(btnValue) {
             return {
                 btn: true,
-                // 'btn-fldclightred': (btnValue == this.zoom),
                 'btn-fldcdarkred': btnValue == this.zoom,
                 'btn-secondary': btnValue != this.zoom
-                // 'btn-fldcdarkred': (btnValue != this.zoom),
             };
         },
         loadChartData: function () {
@@ -22155,7 +23495,7 @@ var PERIOD_DAILY = 2;
                             case 0:
                                 this.chart.showLoading();
 
-                                start = void 0;
+                                start = null;
                                 period = PERIOD_DAILY;
 
                                 if (!(this.zoom.indexOf('d') >= 0)) {
@@ -22204,7 +23544,7 @@ var PERIOD_DAILY = 2;
                                     break;
                                 }
 
-                                start = moment(this.statsBeginDate).format();
+                                start = null;
                                 _context.next = 24;
                                 break;
 
@@ -22214,20 +23554,23 @@ var PERIOD_DAILY = 2;
 
                             case 24:
                                 params = {
-                                    start: start,
-                                    // end: moment().format(),
                                     period: period
                                 };
-                                _context.next = 27;
-                                return this.$request.get('/api/v1/stats/all', { params: params }, this.setError);
 
-                            case 27:
+                                if (start != null) {
+                                    params.start = start;
+                                }
+
+                                _context.next = 28;
+                                return this.$request.get(this.statsUrl, { params: params }, this.setError);
+
+                            case 28:
                                 response = _context.sent;
 
                                 setChartData(this.chart, response.stats, response.meta);
                                 this.chart.hideLoading();
 
-                            case 30:
+                            case 31:
                             case 'end':
                                 return _context.stop();
                         }
@@ -22257,7 +23600,9 @@ var PERIOD_DAILY = 2;
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            this.chart = buildChart();
+                            this.chart = buildChart({
+                                yAxisTitle: this.yAxisTitle
+                            });
                             this.loadChartData();
 
                             // once an hour, update the chart
@@ -22322,14 +23667,14 @@ function setChartData(chart, rawChartData, chartMeta) {
     });
 }
 
-function buildChart() {
+function buildChart(opts) {
     Highcharts.setOptions({
         lang: {
             thousandsSep: ','
         }
     });
 
-    var chart = Highcharts.chart('HomeStatsChart', {
+    var chart = Highcharts.chart('StatsChart', {
         chart: {
             zoomType: 'x'
         },
@@ -22342,7 +23687,7 @@ function buildChart() {
         },
         yAxis: {
             title: {
-                text: 'Cumulative points'
+                text: opts.yAxisTitle || ''
             }
         },
         colors: ["#900000", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"],
@@ -22388,7 +23733,7 @@ function buildChart() {
 
 /***/ }),
 
-/***/ 172:
+/***/ 201:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22402,7 +23747,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", {
         staticStyle: { width: "100%", height: "400px", "margin-bottom": "0px" },
-        attrs: { id: "HomeStatsChart" }
+        attrs: { id: "StatsChart" }
       }),
       _vm._v(" "),
       _c("div", { staticClass: "container text-center mb-5" }, [
@@ -22485,21 +23830,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-dd528616", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-745aa594", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 173:
+/***/ 202:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(174)
+var __vue_script__ = __webpack_require__(203)
 /* template */
-var __vue_template__ = __webpack_require__(175)
+var __vue_template__ = __webpack_require__(204)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -22516,7 +23861,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/ErrorPanelComponent.vue"
+Component.options.__file = "resources/assets/js/components/TeamDisplayComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -22525,9 +23870,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-20523ccc", Component.options)
+    hotAPI.createRecord("data-v-7f0e618f", Component.options)
   } else {
-    hotAPI.reload("data-v-20523ccc", Component.options)
+    hotAPI.reload("data-v-7f0e618f", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -22539,11 +23884,54 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 174:
+/***/ 203:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -22557,27 +23945,105 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        errormsg: String
+        teamData: String
+    },
+    data: function data() {
+        return {
+            errorMsg: null,
+
+            team: {}
+        };
+    },
+
+    methods: {
+        setError: function setError(errorMsg) {
+            this.errorMsg = errorMsg;
+        }
+    },
+
+    mounted: function mounted() {
+        console.log('this.teamData', this.teamData);
+        this.team = JSON.parse(this.teamData);
+        console.log('this.team', this.team);
     }
 });
 
 /***/ }),
 
-/***/ 175:
+/***/ 204:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.errormsg != null && _vm.errormsg.length > 0
+  return _vm.team.name
     ? _c(
         "div",
-        {
-          staticClass: "alert alert-danger alert-dismissible fade show",
-          attrs: { role: "alert" }
-        },
-        [_vm._v("\n    " + _vm._s(_vm.errormsg) + "\n    "), _vm._m(0)]
+        [
+          _c("error-panel", { attrs: { errormsg: _vm.errorMsg } }),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-8" }, [
+              _c("h4", { staticClass: "mb-3" }, [
+                _c("i", { staticClass: "fa fa-user mr-2" }),
+                _vm._v(" Information for " + _vm._s(_vm.team.name))
+              ]),
+              _vm._v(" "),
+              _c("table", { staticClass: "table table-sm table-striped" }, [
+                _c("thead"),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.team.name))])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(_vm.team.number))])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("points")(_vm.team.allPoints)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("points")(_vm.team.weekPoints)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("points")(_vm.team.dayPoints)))
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "mt-3" }, [_vm._v("Points")]),
+          _vm._v(" "),
+          _c("chart-component", {
+            attrs: {
+              "stats-url": "/api/v1/stats/team/" + _vm.team.number,
+              "y-axis-title": "points for " + _vm.team.name
+            }
+          })
+        ],
+        1
       )
     : _vm._e()
 }
@@ -22586,18 +24052,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "alert",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
+    return _c("td", [_c("strong", [_vm._v("Team Name")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Team Number")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("All Time Points")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Points this Week")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("strong", [_vm._v("Points in Last 24 hours")])])
   }
 ]
 render._withStripped = true
@@ -22605,21 +24084,21 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-20523ccc", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7f0e618f", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 176:
+/***/ 205:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(5)
 /* script */
-var __vue_script__ = __webpack_require__(177)
+var __vue_script__ = __webpack_require__(206)
 /* template */
-var __vue_template__ = __webpack_require__(178)
+var __vue_template__ = __webpack_require__(207)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -22636,7 +24115,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/MemberListComponent.vue"
+Component.options.__file = "resources/assets/js/components/TeamListComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -22645,9 +24124,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0743259e", Component.options)
+    hotAPI.createRecord("data-v-0f91987b", Component.options)
   } else {
-    hotAPI.reload("data-v-0743259e", Component.options)
+    hotAPI.reload("data-v-0f91987b", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -22659,12 +24138,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 177:
+/***/ 206:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
 
@@ -22702,14 +24181,86 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+var Pager = __webpack_require__(179);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             errorMsg: null,
-            members: [],
 
-            loading: false
+            teams: [],
+            paging: {},
+
+            loading: false,
+
+            searchName: '',
+            searchNumber: ''
         };
     },
 
@@ -22718,28 +24269,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             this.errorMsg = errorMsg;
         },
         showLoading: function showLoading() {},
-        loadMemberData: function () {
+        loadTeamData: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var start, params, response;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 this.loading = true;
+                                this.pager.load();
 
-                                start = void 0;
-                                params = {};
-                                _context.next = 5;
-                                return this.$request.get('/api/v1/members', { params: params }, this.setError);
-
-                            case 5:
-                                response = _context.sent;
-
-                                this.members = response.items;
-
-                                this.loading = false;
-
-                            case 8:
+                            case 2:
                             case 'end':
                                 return _context.stop();
                         }
@@ -22747,12 +24286,36 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 }, _callee, this);
             }));
 
-            function loadMemberData() {
+            function loadTeamData() {
                 return _ref.apply(this, arguments);
             }
 
-            return loadMemberData;
-        }()
+            return loadTeamData;
+        }(),
+        onLoad: function onLoad() {
+            this.loading = true;
+        },
+        onLoadComplete: function onLoadComplete(teams, paging) {
+            this.teams = teams;
+            this.paging = paging;
+            this.loading = false;
+        },
+        doSearch: function doSearch() {
+            var vars = {};
+            if (this.searchName.length > 0) {
+                vars.name = this.searchName;
+            }
+            if (this.searchNumber.length > 0) {
+                vars.number = this.searchNumber;
+            }
+
+            this.pager.search(vars);
+        },
+        clearSearch: function clearSearch() {
+            this.searchName = '';
+            this.searchNumber = '';
+            this.pager.search({});
+        }
     },
 
     mounted: function () {
@@ -22761,9 +24324,21 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
-                            this.loadMemberData();
+                            this.pager = Pager.init({
+                                onLoad: this.onLoad,
+                                onLoadComplete: this.onLoadComplete,
+                                onError: this.setError,
+                                request: this.$request,
 
-                        case 1:
+                                url: '/api/v1/teams',
+                                defaultSort: 'allPoints',
+                                defaultSortDirection: 'desc',
+                                perPage: 10
+                            });
+
+                            this.loadTeamData();
+
+                        case 2:
                         case 'end':
                             return _context2.stop();
                     }
@@ -22781,7 +24356,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 /***/ }),
 
-/***/ 178:
+/***/ 207:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22793,52 +24368,416 @@ var render = function() {
     [
       _c("error-panel", { attrs: { errormsg: _vm.errorMsg } }),
       _vm._v(" "),
-      _vm.members.length > 0
-        ? _c(
-            "table",
-            { staticClass: "table table-sm" },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._l(_vm.members, function(member) {
-                return _c("tbody", [
-                  _c("tr", [
-                    _c("td", [
-                      _c(
-                        "a",
-                        { attrs: { href: "/member/" + member.userName } },
-                        [_vm._v(_vm._s(member.friendlyName))]
-                      )
-                    ]),
+      _vm.teams.length > 0 || _vm.loading || _vm.paging.isSearch
+        ? _c("div", { class: { loading: _vm.loading } }, [
+            _c("h3", [_vm._v("FoldingCoin Teams")]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                staticClass: "mt-4 mb-2",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.doSearch($event)
+                  }
+                }
+              },
+              [
+                _c("h5", [_vm._v("Filter Results")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-row align-items-center" }, [
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _c(
+                      "label",
+                      { staticClass: "sr-only", attrs: { for: "SearchName" } },
+                      [_vm._v("Name")]
+                    ),
                     _vm._v(" "),
-                    _c("td", [
-                      _c("span", { attrs: { title: member.bitcoinAddress } }, [
-                        _vm._v(
-                          _vm._s(
-                            _vm._f("shortbitcoinaddress")(member.bitcoinAddress)
-                          )
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(_vm._f("points")(member.dayPoints)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(_vm._f("points")(member.weekPoints)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(_vm._f("points")(member.allPoints)))
+                    _c("div", { staticClass: "input-group mb-2" }, [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.searchName,
+                            expression: "searchName"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "SearchName",
+                          placeholder: ""
+                        },
+                        domProps: { value: _vm.searchName },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.searchName = $event.target.value
+                          }
+                        }
+                      })
                     ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "sr-only",
+                        attrs: { for: "SearchTeamNumber" }
+                      },
+                      [_vm._v("Team Number")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group mb-2" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.searchNumber,
+                            expression: "searchNumber"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "SearchTeamNumber",
+                          placeholder: ""
+                        },
+                        domProps: { value: _vm.searchNumber },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.searchNumber = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-fldcdarkred mb-2",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Search")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary mb-2",
+                        attrs: { type: "button" },
+                        on: { click: _vm.clearSearch }
+                      },
+                      [_vm._v("Clear Search")]
+                    )
                   ])
                 ])
-              })
-            ],
-            2
-          )
-        : _c("div", [_vm._v("No members are available to show.")])
+              ]
+            ),
+            _vm._v(" "),
+            _vm.teams.length > 0
+              ? _c("table", { staticClass: "table table-sm" }, [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#sort" },
+                            on: {
+                              click: function($event) {
+                                _vm.pager.toggleSort("name", "asc")
+                              }
+                            }
+                          },
+                          [
+                            _vm.paging.sort == "name"
+                              ? _c("i", {
+                                  class: {
+                                    fa: true,
+                                    "fa-sort-down":
+                                      _vm.paging.sortDirection == "desc",
+                                    "fa-sort-up":
+                                      _vm.paging.sortDirection == "asc"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" \n                        Name")
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#sort" },
+                            on: {
+                              click: function($event) {
+                                _vm.pager.toggleSort("number", "asc")
+                              }
+                            }
+                          },
+                          [
+                            _vm.paging.sort == "number"
+                              ? _c("i", {
+                                  class: {
+                                    fa: true,
+                                    "fa-sort-down":
+                                      _vm.paging.sortDirection == "desc",
+                                    "fa-sort-up":
+                                      _vm.paging.sortDirection == "asc"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" \n                        Team Number")
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#sort" },
+                            on: {
+                              click: function($event) {
+                                _vm.pager.toggleSort("dayPoints", "desc")
+                              }
+                            }
+                          },
+                          [
+                            _vm.paging.sort == "dayPoints"
+                              ? _c("i", {
+                                  class: {
+                                    fa: true,
+                                    "fa-sort-down":
+                                      _vm.paging.sortDirection == "desc",
+                                    "fa-sort-up":
+                                      _vm.paging.sortDirection == "asc"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" \n                        24h Points")
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#sort" },
+                            on: {
+                              click: function($event) {
+                                _vm.pager.toggleSort("weekPoints", "desc")
+                              }
+                            }
+                          },
+                          [
+                            _vm.paging.sort == "weekPoints"
+                              ? _c("i", {
+                                  class: {
+                                    fa: true,
+                                    "fa-sort-down":
+                                      _vm.paging.sortDirection == "desc",
+                                    "fa-sort-up":
+                                      _vm.paging.sortDirection == "asc"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" \n                        7d Points")
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#sort" },
+                            on: {
+                              click: function($event) {
+                                _vm.pager.toggleSort("allPoints", "desc")
+                              }
+                            }
+                          },
+                          [
+                            _vm.paging.sort == "allPoints"
+                              ? _c("i", {
+                                  class: {
+                                    fa: true,
+                                    "fa-sort-down":
+                                      _vm.paging.sortDirection == "desc",
+                                    "fa-sort-up":
+                                      _vm.paging.sortDirection == "asc"
+                                  }
+                                })
+                              : _vm._e(),
+                            _vm._v(" \n                        Total Points")
+                          ]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.teams, function(team) {
+                      return _c("tr", [
+                        _c("td", [
+                          _c("a", { attrs: { href: "/team/" + team.number } }, [
+                            _vm._v(_vm._s(team.name))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("a", { attrs: { href: "/team/" + team.number } }, [
+                            _vm._v(_vm._s(team.number))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("points")(team.dayPoints)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("points")(team.weekPoints)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("points")(team.allPoints)))
+                        ])
+                      ])
+                    })
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.teams.length == 0
+              ? _c("div", {}, [
+                  _c("p", [_vm._v("No results found for this search.")])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.paging.count > 0
+              ? _c("div", { staticClass: "text-center" }, [
+                  _vm._v(
+                    "Showing " +
+                      _vm._s(_vm.teams.length) +
+                      " of " +
+                      _vm._s(_vm.paging.count) +
+                      " Folding Teams"
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.paging.pageCount > 1
+              ? _c("div", [
+                  _c("nav", { attrs: { "aria-label": "Page navigation" } }, [
+                    _c(
+                      "ul",
+                      { staticClass: "pagination justify-content-center" },
+                      [
+                        _c(
+                          "li",
+                          {
+                            class: {
+                              "page-item": true,
+                              disabled: !_vm.paging.hasPrevious
+                            }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#", tabindex: "-1" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.pager.prevPage()
+                                  }
+                                }
+                              },
+                              [_vm._v("Previous")]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.paging.pageCount, function(pg) {
+                          return _c(
+                            "li",
+                            {
+                              class: {
+                                "page-item": true,
+                                active: _vm.paging.page == pg - 1
+                              }
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "page-link",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.pager.goToPage(pg - 1)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(pg))]
+                              )
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "li",
+                          {
+                            class: {
+                              "page-item": true,
+                              disabled: !_vm.paging.hasNext
+                            }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.pager.nextPage()
+                                  }
+                                }
+                              },
+                              [_vm._v("Next")]
+                            )
+                          ]
+                        )
+                      ],
+                      2
+                    )
+                  ])
+                ])
+              : _vm._e()
+          ])
+        : _c("div", [_vm._v("No teams are available to show.")])
     ],
     1
   )
@@ -22848,18 +24787,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Username")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Address")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("24h Points")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("7d Points")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Total Points")])
-      ])
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Name")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Team Number")])
     ])
   }
 ]
@@ -22868,23 +24805,16 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0743259e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-0f91987b", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ 179:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 4:
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(167);
+module.exports = __webpack_require__(168);
 
 
 /***/ }),
@@ -35901,4 +37831,4 @@ return jQuery;
 
 /***/ })
 
-},[141]);
+},[142]);

@@ -2,14 +2,13 @@
 
 namespace App\Repositories;
 
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Tokenly\LaravelApiProvider\Repositories\BaseRepository;
 
 /*
-* FoldingTeamRepository
-*/
+ * FoldingTeamRepository
+ */
 class FoldingTeamRepository extends BaseRepository
 {
     protected $model_type = 'App\Models\FoldingTeam';
@@ -49,5 +48,20 @@ class FoldingTeamRepository extends BaseRepository
 
     }
 
+    public function findAllTeamNumberAndNamesForUsername($user_name)
+    {
+        return $this->findAllTeamsForUsername($user_name, ['folding_teams.name', 'folding_teams.number']);
+    }
+
+    public function findAllTeamsForUsername($user_name, $fields = 'folding_teams.*')
+    {
+        $collection = DB::table($this->prototype_model->getTable())
+            ->select($fields)
+            ->join('folding_members', 'folding_teams.id', '=', 'folding_members.team_id')
+            ->where('folding_members.user_name', '=', $user_name)
+            ->get();
+
+        return $collection;
+    }
 
 }

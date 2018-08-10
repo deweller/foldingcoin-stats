@@ -32,7 +32,7 @@ class MemberAggregateStatRepository
                     'user_name' => $stat_object->user_name,
                     'friendly_name' => $stat_object->friendly_name,
                     'bitcoin_address' => $stat_object->bitcoin_address,
-                    'updated_at' => $stat_object->updated_at,
+                    'updated_at' => $now_string,
 
                     'all_points' => 0,
                     'all_work_units' => 0,
@@ -76,11 +76,18 @@ class MemberAggregateStatRepository
         $filter->limit($query);
         $filter->sort($query);
 
-        Log::debug("\$query->toSql()\n" . $query->toSql());
+        // Log::debug("\$query->toSql()\n" . $query->toSql());
 
         return $query->get();
-
     }
+
+    public function findByUsername($username)
+    {
+        return DB::table('member_aggregate_stats')
+            ->where('user_name', '=', $username)
+            ->first();
+    }
+
     // ------------------------------------------------------------------------
 
     protected function findAllMembersWithStats()

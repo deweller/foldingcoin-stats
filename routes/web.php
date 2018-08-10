@@ -13,6 +13,9 @@
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 
-Route::get('/teams', 'MembersController@teams')->name('teams.index');
 Route::get('/members', 'MembersController@members')->name('members.index');
+Route::get('/member/{username}', 'MembersController@showMember')->name('members.show');
+
+Route::get('/teams', 'TeamsController@teams')->name('teams.index');
+Route::get('/team/{username}', 'TeamsController@showTeam')->name('teams.show');
 

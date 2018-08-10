@@ -18,10 +18,14 @@ window.Vue = require('vue');
  let RequestPlugin = require('./plugins/request').default
  Vue.use(RequestPlugin)
 
-Vue.component('home-chart-component', require('./components/HomeChartComponent.vue'));
+Vue.component('chart-component', require('./components/ChartComponent.vue'));
 Vue.component('error-panel', require('./components/ErrorPanelComponent.vue'));
 
 Vue.component('member-list', require('./components/MemberListComponent.vue'));
+Vue.component('member-display', require('./components/MemberDisplayComponent.vue'));
+
+Vue.component('team-list', require('./components/TeamListComponent.vue'));
+Vue.component('team-display', require('./components/TeamDisplayComponent.vue'));
 
 // vue filters
 Vue.filter('shortbitcoinaddress', function (value) {

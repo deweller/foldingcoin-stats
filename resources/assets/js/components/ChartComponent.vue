@@ -4,7 +4,7 @@
             :errormsg="errorMsg"
         ></error-panel>
 
-        <div id="HomeStatsChart" style="width:100%; height:400px; margin-bottom: 0px;"></div>
+        <div id="StatsChart" style="width:100%; height:400px; margin-bottom: 0px;"></div>
 
         <div class="container text-center mb-5">
             <!-- <h4>Chart Range</h4> -->
@@ -27,12 +27,12 @@
 
     export default {
         props: {
-            statsBeginDate: String,
+            statsUrl: String,
+            yAxisTitle: String,
         },
         data() {
             return {
                 zoom: '30d',
-
                 errorMsg: null,
             }
         },
@@ -43,16 +43,14 @@
             btnClass(btnValue) {
                 return {
                     btn: true,
-                    // 'btn-fldclightred': (btnValue == this.zoom),
                     'btn-fldcdarkred': (btnValue == this.zoom),
                     'btn-secondary': (btnValue != this.zoom),
-                    // 'btn-fldcdarkred': (btnValue != this.zoom),
                 }
             },
             async loadChartData() {
                 this.chart.showLoading()
 
-                let start
+                let start = null
                 let period = PERIOD_DAILY
                 if (this.zoom.indexOf('d') >= 0) {
                     let startDays = parseInt(this.zoom.substr(0, this.zoom.length - 1))
@@ -68,17 +66,19 @@
                     start = moment().subtract(startHours, 'hours').format()
                     period = PERIOD_HOURLY
                 } else if (this.zoom == 'all') {
-                    start = moment(this.statsBeginDate).format()
+                    start = null
                 } else {
                     console.error('unknown zoom', ''+this.zoom);
                     return
                 }
                 let params = {
-                    start: start,
-                    // end: moment().format(),
                     period: period,
                 }
-                let response = await this.$request.get('/api/v1/stats/all', {params}, this.setError)
+                if (start != null) {
+                    params.start = start
+                }
+
+                let response = await this.$request.get(this.statsUrl, {params}, this.setError)
                 setChartData(this.chart, response.stats, response.meta)
                 this.chart.hideLoading()
             }
@@ -91,7 +91,9 @@
             }
         },
         mounted: async function() {
-            this.chart = buildChart()
+            this.chart = buildChart({
+                yAxisTitle: this.yAxisTitle
+            })
             this.loadChartData()
 
             // once an hour, update the chart
@@ -124,14 +126,14 @@
 
     }
 
-    function buildChart() {
+    function buildChart(opts) {
         Highcharts.setOptions({
             lang: {
                 thousandsSep: ','
             }
         })
 
-        let chart = Highcharts.chart('HomeStatsChart', {
+        let chart = Highcharts.chart('StatsChart', {
             chart: {
                 zoomType: 'x'
             },
@@ -144,7 +146,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Cumulative points'
+                    text: opts.yAxisTitle || '',
                 }
             },
             colors: ["#900000", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"],

@@ -2,11 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\FoldingStat;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Tokenly\LaravelApiProvider\Filter\RequestFilter;
 use Tokenly\LaravelApiProvider\Repositories\BaseRepository;
 
 /*
@@ -29,14 +25,17 @@ class FoldingMemberRepository extends BaseRepository
         });
     }
 
-    public function allMemberIdsByUniqueKey()
+    public function allMemberAndTeamIdsByUniqueKey()
     {
         $collection = DB::table($this->prototype_model->getTable())
-            ->select(['user_name', 'team_number', 'id'])
+            ->select(['user_name', 'team_number', 'id', 'team_id'])
             ->get();
 
         return $collection->mapWithKeys(function ($m) {
-            return [$m->user_name . '|' . $m->team_number => $m->id];
+            return [$m->user_name . '|' . $m->team_number => [
+                'id' => $m->id,
+                'team_id' => $m->team_id,
+            ]];
         });
     }
 
@@ -48,6 +47,25 @@ class FoldingMemberRepository extends BaseRepository
             ->first();
     }
 
+    public function lookupAllIdsForUsername($user_name)
+    {
+        $collection = DB::table($this->prototype_model->getTable())
+            ->select(['id'])
+            ->where('user_name', '=', $user_name)
+            ->get();
+
+        return $collection->pluck('id')->toArray();
+    }
+
+    public function lookupAllIdsForTeamId($team_id)
+    {
+        $collection = DB::table($this->prototype_model->getTable())
+            ->select(['id'])
+            ->where('team_id', '=', $team_id)
+            ->get();
+
+        return $collection->pluck('id')->toArray();
+    }
 
 }
 
