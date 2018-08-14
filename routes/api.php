@@ -24,5 +24,9 @@ Route::prefix('v1')->group(function () {
     
     Route::get('/members', 'Api\MembersController@index')->name('api.members.index');
     Route::get('/teams', 'Api\TeamsController@index')->name('api.teams.index');
+    Route::get('/team/{number}/members', 'Api\MembersController@membersForTeam')->name('api.members.byTeam');
+
+    Route::get('/ranked/members', 'Api\MembersController@byRank')->name('api.stats.membersByRank');
+    Route::get('/ranked/teams', 'Api\TeamsController@byRank')->name('api.stats.teamsByRank');
 });
 

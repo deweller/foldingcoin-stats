@@ -64,4 +64,10 @@ class FoldingTeamRepository extends BaseRepository
         return $collection;
     }
 
+    public function deleteAll() {
+        DB::table($this->prototype_model->getTable())
+            ->delete();
+    }
+
+
 }

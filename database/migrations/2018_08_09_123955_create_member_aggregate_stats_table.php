@@ -18,14 +18,18 @@ class CreateMemberAggregateStatsTable extends Migration
             $table->string('friendly_name')->index();
             $table->string('bitcoin_address')->index();
             
-            $table->integer('all_points')->default(0)->index();
-            $table->integer('all_work_units')->default(0)->index();
+            $table->bigInteger('all_points')->default(0)->index();
+            $table->bigInteger('all_work_units')->default(0)->index();
 
-            $table->integer('week_points')->default(0)->index();
-            $table->integer('week_work_units')->default(0)->index();
+            $table->bigInteger('week_points')->default(0)->index();
+            $table->bigInteger('week_work_units')->default(0)->index();
             
-            $table->integer('day_points')->default(0)->index();
-            $table->integer('day_work_units')->default(0)->index();
+            $table->bigInteger('day_points')->default(0)->index();
+            $table->bigInteger('day_work_units')->default(0)->index();
+
+            $table->integer('all_rank')->unsigned()->nullable()->unique();
+            $table->integer('week_rank')->unsigned()->nullable()->unique();
+            $table->integer('day_rank')->unsigned()->nullable()->unique();
 
             $table->timestamp('updated_at')->nullable();
         });

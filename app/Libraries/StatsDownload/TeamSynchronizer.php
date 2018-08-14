@@ -36,7 +36,7 @@ class TeamSynchronizer
         // create
 
         foreach ($team_numbers_to_create as $team_number) {
-            $new_team_vars = $new_teams_by_number[$team_number];
+            $new_team_vars = $this->normalizeTeamVarsFromApi($new_teams_by_number[$team_number]);
 
             $team = $this->folding_team_repository->create([
                 'number' => $new_team_vars['teamNumber'],
@@ -52,7 +52,7 @@ class TeamSynchronizer
         // update
 
         foreach ($team_numbers_to_update as $team_number) {
-            $new_team_vars = $new_teams_by_number[$team_number];
+            $new_team_vars = $this->normalizeTeamVarsFromApi($new_teams_by_number[$team_number]);
             $team = $existing_teams_by_number[$team_number];
 
             if (
@@ -88,6 +88,17 @@ class TeamSynchronizer
         }
 
 
+    }
+
+    protected function normalizeTeamVarsFromApi($team_vars)
+    {
+        if (!isset($team_vars['teamNumber'])) {
+            throw new Exception("team number not found for team vars: ".json_encode($team_vars), 1);
+        }
+
+        $team_vars['teamName'] = $team_vars['teamName'] ?? "Team {$team_vars['teamNumber']}";
+
+        return $team_vars;
     }
 
 }

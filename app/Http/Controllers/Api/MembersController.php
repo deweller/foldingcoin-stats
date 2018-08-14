@@ -15,21 +15,60 @@ class MembersController extends ApiController
         $filter = IndexRequestFilter::createFromRequest($request, $this->buildFilterDefinition());
         $member_stats = $member_aggregate_stat_repository->findAllWithFilter($filter);
 
+        $serialized_members = $this->serializeMemberStats($member_stats);
+
+        return $this->buildJSONResponse(
+            $this->buidPagedItemList($serialized_members, $filter->used_page_offset, $filter->used_limit, $filter->getCountForPagination())
+        );
+    }
+
+    public function membersForTeam($team_number, Request $request, MemberAggregateStatRepository $member_aggregate_stat_repository)
+    {
+        $member_stats = $member_aggregate_stat_repository->findByTeam($team_number);
+
+        $serialized_members = $this->serializeMemberStats($member_stats);
+
+        return $this->buildJSONResponse(
+            $this->buidPagedItemList($serialized_members, $_page_offset=0, $_limit=100, count($serialized_members))
+        );
+    }
+
+    public function byRank(Request $request, MemberAggregateStatRepository $member_aggregate_stat_repository)
+    {
+        $rank_type = 'all';
+        $rank_start = 1;
+        $rank_end = 5;
+        $member_stats = $member_aggregate_stat_repository->findByRankRange($rank_type, $rank_start, $rank_end);
+
+        $serialized_members = $this->serializeMemberStats($member_stats);
+
+        return $this->buildJSONResponse(
+            $this->buidPagedItemList($serialized_members, $_page_offset=0, $_limit=100, count($serialized_members))
+        );
+
+    }
+
+    protected function serializeMemberStats($member_stats)
+    {
         $serialized_members = [];
         foreach ($member_stats as $member_stat) {
             $serialized_members[] = [
                 'userName' => $member_stat->user_name,
                 'friendlyName' => $member_stat->friendly_name,
                 'bitcoinAddress' => $member_stat->bitcoin_address,
+                
                 'allPoints' => $member_stat->all_points ?? 0,
+                'allRank' => $member_stat->all_rank ?? 0,
+                
                 'weekPoints' => $member_stat->week_points ?? 0,
+                'weekRank' => $member_stat->week_rank ?? 0,
+                
                 'dayPoints' => $member_stat->day_points ?? 0,
+                'dayRank' => $member_stat->day_rank ?? 0,
             ];
         }
 
-        return $this->buildJSONResponse(
-            $this->buidPagedItemList($serialized_members, $filter->used_page_offset, $filter->used_limit, $filter->getCountForPagination())
-        );
+        return $serialized_members;
     }
 
     protected function buildFilterDefinition()

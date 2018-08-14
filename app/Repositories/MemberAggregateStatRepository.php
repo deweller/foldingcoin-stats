@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\FoldingStat;
 use App\Repositories\FoldingMemberRepository;
+use App\Repositories\FoldingTeamRepository;
 use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -57,9 +58,24 @@ class MemberAggregateStatRepository
             // delete all
             DB::table('member_aggregate_stats')->delete();
 
+            // insert all rows
             foreach (collect(array_values($by_username))->chunk(250) as $insert_rows_chunk) {
                 DB::table('member_aggregate_stats')->insert($insert_rows_chunk->toArray());
             }
+
+            // add the rankings
+            $rank_types = ['all','week','day'];
+            foreach($rank_types as $rank_type) {
+                $rank_counter = 1;
+                $rows = DB::table('member_aggregate_stats')->select('user_name')->orderBy($rank_type.'_points', 'DESC')->get();
+                foreach($rows as $row) {
+                    DB::table('member_aggregate_stats')->where('user_name', $row->user_name)->update([
+                        $rank_type.'_rank' => $rank_counter,
+                    ]);
+                    ++$rank_counter;
+                }
+            }
+
         });
     }
 
@@ -81,11 +97,47 @@ class MemberAggregateStatRepository
         return $query->get();
     }
 
+    public function findByTeam($team_number)
+    {
+        $query = DB::table('member_aggregate_stats')->select();
+
+        $query->select('member_aggregate_stats.*');
+        $query->join('folding_members', 'member_aggregate_stats.user_name', '=', 'folding_members.user_name');
+        $query->where('folding_members.team_number', '=', $team_number);
+
+        // sort by points
+        $query->orderBy('all_points', 'desc');
+
+        return $query->get();
+    }
+
     public function findByUsername($username)
     {
         return DB::table('member_aggregate_stats')
             ->where('user_name', '=', $username)
             ->first();
+    }
+
+    public function findByRank($rank_type, $rank)
+    {
+        $field = $rank_type.'_rank';
+
+        return DB::table('member_aggregate_stats')
+            ->where($field, '=', $rank)
+            ->first();
+    }
+
+    // start and end are inclusive
+    //   1, 10 is all 10 entries
+    public function findByRankRange($rank_type, $rank_start, $rank_end)
+    {
+        $field = $rank_type.'_rank';
+
+        return DB::table('member_aggregate_stats')
+            ->where($field, '>=', $rank_start)
+            ->where($field, '<=', $rank_end)
+            ->orderBy($field)
+            ->get();
     }
 
     // ------------------------------------------------------------------------

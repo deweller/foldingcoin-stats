@@ -19,7 +19,7 @@ class CreateFoldingStatsTable extends Migration
             $table->integer('member_id')->unsigned()->index();
             $table->integer('team_id')->unsigned()->index();
             
-            $table->integer('points')->default(0);
+            $table->bigInteger('points')->default(0);
             $table->integer('work_units')->default(0);
 
             $table->timestamp('start_date')->nullable();

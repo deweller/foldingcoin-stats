@@ -18,8 +18,10 @@ window.Vue = require('vue');
  let RequestPlugin = require('./plugins/request').default
  Vue.use(RequestPlugin)
 
-Vue.component('chart-component', require('./components/ChartComponent.vue'));
 Vue.component('error-panel', require('./components/ErrorPanelComponent.vue'));
+
+Vue.component('chart-component', require('./components/ChartComponent.vue'));
+Vue.component('rank-component', require('./components/RankComponent.vue'));
 
 Vue.component('member-list', require('./components/MemberListComponent.vue'));
 Vue.component('member-display', require('./components/MemberDisplayComponent.vue'));

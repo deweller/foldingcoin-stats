@@ -38,6 +38,7 @@ class MembersSynchronizer
 
         // do all daily synchronizations
         while ($working_date->lt($end_date)) {
+            Log::debug("sync daily stats for {$working_date}");
             $period_type = FoldingStat::PERIOD_DAILY;
 
             // Log::debug("Synching PERIOD_DAILY for $working_date");
@@ -51,6 +52,7 @@ class MembersSynchronizer
         $working_date = $this->oldestHourGranularityDate();
         while ($working_date->lt($end_date)) {
             if ($working_date->gte($start_date)) {
+                Log::debug("sync hourly stats for {$working_date}");
                 $period_type = FoldingStat::PERIOD_HOURLY;
 
                 // Log::debug("Synching PERIOD_HOURLY for $working_date");
@@ -88,7 +90,16 @@ class MembersSynchronizer
         // echo "start: $start_date\n";
         // echo "end: $end_date\n";
         $existing_members_by_key = $this->folding_member_repository->allMemberAttributesByUniqueKey();
-        $new_members_by_key = collect($this->stats_api_client->getMemberStats($start_date, $end_date)['members'])->keyBy(function ($m) {
+        try {
+            $stats_result = $this->stats_api_client->getMemberStats($start_date, $end_date);
+        } catch (Exception $e) {
+            EventLog::logError('stats.failed', $e, [
+                'startDate' => $start_date,
+                'period' => $period_type,
+            ]);
+            return;
+        }
+        $new_members_by_key = collect($stats_result['members'])->keyBy(function ($m) {
             return $m['userName'] . '|' . $m['teamNumber'];
         });
 
@@ -139,7 +150,7 @@ class MembersSynchronizer
 
         $team_by_number_cache = [];
         foreach ($member_keys_to_create as $member_key) {
-            $new_member_vars = $new_members_by_key[$member_key];
+            $new_member_vars = $this->normalizeMemberVarsFromApi($new_members_by_key[$member_key]);
 
             // find or create a team
             if (!isset($team_by_number_cache[$new_member_vars['teamNumber']])) {
@@ -165,7 +176,7 @@ class MembersSynchronizer
         // update
 
         foreach ($member_keys_to_update as $member_key) {
-            $new_member_vars = $new_members_by_key[$member_key];
+            $new_member_vars = $this->normalizeMemberVarsFromApi($new_members_by_key[$member_key]);
             $member = $existing_members_by_key[$member_key];
 
             // echo "{$new_member_vars['userName']} ?? {$member->user_name}\n";
@@ -323,5 +334,26 @@ class MembersSynchronizer
 
     }
 
+
+    protected function normalizeMemberVarsFromApi($member_vars)
+    {
+        if (!isset($member_vars['userName'])) {
+            throw new Exception("userName not found for member vars: ".json_encode($member_vars), 1);
+        }
+        if (!isset($member_vars['teamNumber'])) {
+            throw new Exception("teamNumber not found for member vars: ".json_encode($member_vars), 1);
+        }
+
+        // no friendly name
+        $member_vars['friendlyName'] = $member_vars['friendlyName'] ?? "{$member_vars['userName']}";
+
+        // no bitcoin address
+        $member_vars['bitcoinAddress'] = $member_vars['bitcoinAddress'] ?? "[unknown]";
+
+        // no team number
+        $member_vars['teamNumber'] = $member_vars['teamNumber'] ?? "0";
+
+        return $member_vars;
+    }
 
 }

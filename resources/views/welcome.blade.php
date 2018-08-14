@@ -10,6 +10,27 @@
                 stats-url="/api/v1/stats/all"
                 y-axis-title="Total daily FAH points"
             ></chart-component>
+
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <rank-component
+                        rank-url="/api/v1/ranked/teams"
+                        rank-type="teams"
+                    ></rank-component>
+
+                    <div class="text-right"><a href="/teams">More teams <i class="fas fa-angle-double-right"></i></a></div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <rank-component
+                        rank-url="/api/v1/ranked/members"
+                        rank-type="members"
+                    ></rank-component>
+
+                    <div class="text-right"><a href="/members">More members <i class="fas fa-angle-double-right"></i></a></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

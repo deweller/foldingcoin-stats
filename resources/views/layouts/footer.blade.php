@@ -42,7 +42,7 @@
     <div class="row">
         <div class="col-md">
             <p>
-                FoldingCoin Inc is registered with the IRS as a <a href="https://apps.irs.gov/app/eos/displayAll.do?dispatchMethod=displayAllInfo&amp;Id=4724490&amp;ein=474148952&amp;country=US&amp;deductibility=all&amp;dispatchMethod=searchAll&amp;isDescending=false&amp;city=&amp;ein1=47-4148952&amp;postDateFrom=&amp;exemptTypeCode=al&amp;submitName=Search&amp;sortColumn=orgName&amp;totalResults=1&amp;names=&amp;resultsPerPage=25&amp;indexOfFirstRow=0&amp;postDateTo=&amp;state=All+States" target="_blank" rel="noopener">501(c)3</a> Public charity with a 50% Deductibility Limitation, EIN number is: 47-4148952
+                FoldingCoin Inc. is registered with the IRS as a <a href="https://apps.irs.gov/app/eos/displayAll.do?dispatchMethod=displayAllInfo&amp;Id=4724490&amp;ein=474148952&amp;country=US&amp;deductibility=all&amp;dispatchMethod=searchAll&amp;isDescending=false&amp;city=&amp;ein1=47-4148952&amp;postDateFrom=&amp;exemptTypeCode=al&amp;submitName=Search&amp;sortColumn=orgName&amp;totalResults=1&amp;names=&amp;resultsPerPage=25&amp;indexOfFirstRow=0&amp;postDateTo=&amp;state=All+States" target="_blank" rel="noopener">501(c)3</a> Public charity with a 50% Deductibility Limitation, EIN number is: 47-4148952
             </p>
             <p>
                 Donate:<br>
@@ -65,7 +65,7 @@
             </p>
         </div>
         <div class="col-md">
-            <p class="footer__disclaimer">FoldingCoin Inc does not have direct affiliation or partnerships with Stanford University. This project was built to help support the adoption of the Folding@home project utilizing Tokenly products. All information and comments at foldingcoin.net are those of FoldingCoin, Inc. and not of Stanford University, Folding@home, The LTB Network, or Tokenly Inc. Contact us with questions or concerns: <a href="mailto:rross@foldingcoin.net">rross@foldingcoin.net</a></p>
+            <p class="footer__disclaimer">FoldingCoin Inc. does not have direct affiliation or partnerships with Stanford University. This project was built to help support the adoption of the Folding@home project utilizing Tokenly products. All information and comments at foldingcoin.net are those of FoldingCoin, Inc. and not of Stanford University, Folding@home, The LTB Network, or Tokenly Inc. Contact us with questions or concerns: <a href="mailto:rross@foldingcoin.net">rross@foldingcoin.net</a></p>
         </div>
     </div>
 </div>

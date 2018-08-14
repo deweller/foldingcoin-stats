@@ -3,6 +3,8 @@
 namespace App\Libraries\StatsDownload;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
+use Tokenly\APIClient\Exception\APIException;
 use Tokenly\APIClient\TokenlyAPI;
 
 /**
@@ -13,12 +15,19 @@ class StatsDownloadAPIClient extends TokenlyAPI
     
     public function getTeams()
     {
-        // code
+        $teams_data = $this->getPublic('/GetTeams');
+        return $teams_data;
     }
 
     public function getMemberStats(Carbon $start_date, Carbon $end_date)
     {
-        // code
+        $params = [
+            'startDate' => $start_date->format('Y-m-d\\TH:i:s'),
+            'endDate' => $end_date->format('Y-m-d\\TH:i:s'),
+        ];
+
+        $stats_data = $this->getPublic('/GetMemberStats', $params);
+        return $stats_data;
     }
 
     protected function checkForErrorsInResponse($response, $json) {

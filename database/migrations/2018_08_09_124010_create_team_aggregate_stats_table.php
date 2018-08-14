@@ -17,14 +17,18 @@ class CreateTeamAggregateStatsTable extends Migration
             $table->integer('number')->unique();
             $table->string('name')->index();
 
-            $table->integer('all_points')->default(0)->index();
-            $table->integer('all_work_units')->default(0)->index();
+            $table->bigInteger('all_points')->default(0)->index();
+            $table->bigInteger('all_work_units')->default(0)->index();
 
-            $table->integer('week_points')->default(0)->index();
-            $table->integer('week_work_units')->default(0)->index();
+            $table->bigInteger('week_points')->default(0)->index();
+            $table->bigInteger('week_work_units')->default(0)->index();
             
-            $table->integer('day_points')->default(0)->index();
-            $table->integer('day_work_units')->default(0)->index();
+            $table->bigInteger('day_points')->default(0)->index();
+            $table->bigInteger('day_work_units')->default(0)->index();
+
+            $table->bigInteger('all_rank')->unsigned()->nullable()->unique();
+            $table->bigInteger('week_rank')->unsigned()->nullable()->unique();
+            $table->bigInteger('day_rank')->unsigned()->nullable()->unique();
 
             $table->timestamp('updated_at')->nullable();
         });

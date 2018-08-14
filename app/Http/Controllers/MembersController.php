@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\FoldingMemberRepository;
 use App\Repositories\FoldingTeamRepository;
 use App\Repositories\MemberAggregateStatRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class MembersController extends Controller

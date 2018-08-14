@@ -43,6 +43,25 @@ class TeamAggregateStatRepository
                 }
                 DB::table('team_aggregate_stats')->insert($insert_rows_chunk);
             }
+
+            // add the rankings
+            $rank_types = ['all','week','day'];
+            foreach($rank_types as $rank_type) {
+                $rank_counter = 1;
+                $rows = DB::table('team_aggregate_stats')->select('number')->orderBy($rank_type.'_points', 'DESC')->get();
+                foreach($rows as $row) {
+                    // special case: ignore team "0"
+                    if ($row->number == '0') {
+                        continue;
+                    }
+
+                    DB::table('team_aggregate_stats')->where('number', $row->number)->update([
+                        $rank_type.'_rank' => $rank_counter,
+                    ]);
+                    ++$rank_counter;
+                }
+            }
+
         });
     }
 
@@ -69,6 +88,27 @@ class TeamAggregateStatRepository
         return DB::table('team_aggregate_stats')
             ->where('number', '=', $number)
             ->first();
+    }
+
+
+    public function findByRank($rank_type, $rank)
+    {
+        $field = $rank_type.'_rank';
+
+        return DB::table('team_aggregate_stats')
+            ->where($field, '=', $rank)
+            ->first();
+    }
+
+    public function findByRankRange($rank_type, $rank_start, $rank_end)
+    {
+        $field = $rank_type.'_rank';
+
+        return DB::table('team_aggregate_stats')
+            ->where($field, '>=', $rank_start)
+            ->where($field, '<=', $rank_end)
+            ->orderBy($field)
+            ->get();
     }
 
     // ------------------------------------------------------------------------
