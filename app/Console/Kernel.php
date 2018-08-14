@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('stats:sync-teams')->hourlyAt(5);
         $schedule->command('stats:sync-stats', ['--hours' => 2])->hourlyAt(5);
 
-        $schedule->command('stats:sync-stats', ['--all' => true])->dailyAt('10:30');
+        $schedule->command('stats:sync-stats', ['--all' => true])->dailyAt('12:30');
     }
 
     /**
