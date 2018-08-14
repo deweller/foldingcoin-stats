@@ -37,5 +37,8 @@
 
         <env name="STATS_PROVIDER_URL" value="http://statsdl.foo/v1"/>
         <env name="MOCK_STATS_DATA" value="1"/>
+
+        <env name="STATS_BEGIN_DATE" value="2018-07-01"/>
+
     </php>
 </phpunit>
