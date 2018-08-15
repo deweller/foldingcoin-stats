@@ -74,7 +74,7 @@ class TeamsController extends ApiController
             ],
             'limit' => [
                 'field' => 'limit', // optional
-                'max' => 50, // optional
+                'max' => 100, // optional
                 'pagingField' => 'pg', // optional
             ],
             'defaults' => ['sort' => 'allPoints'],

@@ -35,8 +35,13 @@ Vue.filter('shortbitcoinaddress', function (value) {
         return ''
     }
 
+    let length = value.length
+    if (length < 12) {
+        return value
+    }
+
     value = value.toString()
-    return value.substr(0, 6) + '…' + value.substr(-4, value.length)
+    return value.substr(0, 6) + '…' + value.substr(-4, length)
 })
 
 let numeral = require('numeral')

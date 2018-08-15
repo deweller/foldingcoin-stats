@@ -163,7 +163,7 @@
                 url: '/api/v1/members',
                 defaultSort: 'allPoints',
                 defaultSortDirection: 'desc',
-                perPage: 10,
+                perPage: 100,
             })
 
 

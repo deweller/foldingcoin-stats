@@ -226,8 +226,13 @@ Vue.filter('shortbitcoinaddress', function (value) {
         return '';
     }
 
+    var length = value.length;
+    if (length < 12) {
+        return value;
+    }
+
     value = value.toString();
-    return value.substr(0, 6) + '…' + value.substr(-4, value.length);
+    return value.substr(0, 6) + '…' + value.substr(-4, length);
 });
 
 var numeral = __webpack_require__(142);
@@ -23408,7 +23413,7 @@ var Pager = __webpack_require__(141);
                                 url: '/api/v1/members',
                                 defaultSort: 'allPoints',
                                 defaultSortDirection: 'desc',
-                                perPage: 10
+                                perPage: 100
                             });
 
                             this.loadMemberData();
@@ -24444,7 +24449,7 @@ var Pager = __webpack_require__(141);
                                 url: '/api/v1/teams',
                                 defaultSort: 'allPoints',
                                 defaultSortDirection: 'desc',
-                                perPage: 10
+                                perPage: 100
                             });
 
                             this.loadTeamData();

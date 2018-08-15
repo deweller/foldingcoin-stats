@@ -165,7 +165,7 @@
                 url: '/api/v1/teams',
                 defaultSort: 'allPoints',
                 defaultSortDirection: 'desc',
-                perPage: 10,
+                perPage: 100,
             })
 
 
