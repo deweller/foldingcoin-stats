@@ -72,16 +72,24 @@ class MembersSynchronizer
     public function synchronizeMemberStats(Carbon $start_date, $period_type)
     {
         $start_date = $start_date->copy()->startOfHour();
+        $with_time = true;
 
         switch ($period_type) {
             case FoldingStat::PERIOD_HOURLY:
                 $end_date = $start_date->copy()->addHour(1)->subMinute(1);
+                $with_time = true;
                 break;
             case FoldingStat::PERIOD_DAILY:
-                $end_date = $start_date->copy()->addDay(1)->subMinute(1);
+                // $end_date = $start_date->copy()->addDay(1)->subMinute(1);
+                $start_date = $start_date->copy()->startOfDay();
+                $end_date = $start_date->copy();
+                $with_time = false;
                 break;
             case FoldingStat::PERIOD_MONTHLY:
-                $end_date = $start_date->copy()->addMonth(1)->subMinute(1);
+                // $end_date = $start_date->copy()->addMonth(1)->subMinute(1);
+                $start_date = $start_date->copy()->startOfDay();
+                $end_date = $start_date->copy()->addMonth(1)->subMinute(1)->startOfDay();
+                $with_time = false;
                 break;
             default:
                 throw new Exception("Unknown period type", 1);
@@ -91,7 +99,7 @@ class MembersSynchronizer
         // echo "end: $end_date\n";
         $existing_members_by_key = $this->folding_member_repository->allMemberAttributesByUniqueKey();
         try {
-            $stats_result = $this->stats_api_client->getMemberStats($start_date, $end_date);
+            $stats_result = $this->stats_api_client->getMemberStats($start_date, $end_date, $with_time);
         } catch (Exception $e) {
             EventLog::logError('stats.failed', $e, [
                 'startDate' => $start_date,

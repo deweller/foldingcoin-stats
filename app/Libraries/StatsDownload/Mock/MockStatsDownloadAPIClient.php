@@ -49,7 +49,7 @@ class MockStatsDownloadAPIClient extends StatsDownloadAPIClient
         ];
     }
 
-    public function getMemberStats(Carbon $start_date, Carbon $end_date)
+    public function getMemberStats(Carbon $start_date, Carbon $end_date, $with_time = true)
     {
         // build fake member stats
         $member_stats_by_key = [];

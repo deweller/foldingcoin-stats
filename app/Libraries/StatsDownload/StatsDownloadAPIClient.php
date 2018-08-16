@@ -3,7 +3,6 @@
 namespace App\Libraries\StatsDownload;
 
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 use Tokenly\APIClient\Exception\APIException;
 use Tokenly\APIClient\TokenlyAPI;
 
@@ -12,26 +11,33 @@ use Tokenly\APIClient\TokenlyAPI;
  */
 class StatsDownloadAPIClient extends TokenlyAPI
 {
-    
+
     public function getTeams()
     {
         $teams_data = $this->getPublic('/GetTeams');
         return $teams_data;
     }
 
-    public function getMemberStats(Carbon $start_date, Carbon $end_date)
+    public function getMemberStats(Carbon $start_date, Carbon $end_date, $with_time = true)
     {
+        if ($with_time) {
+            $format = 'Y-m-d\\TH:i:s';
+        } else {
+            $format = 'Y-m-d';
+        }
+
         $params = [
-            'startDate' => $start_date->format('Y-m-d\\TH:i:s'),
-            'endDate' => $end_date->format('Y-m-d\\TH:i:s'),
+            'startDate' => $start_date->format($format),
+            'endDate' => $end_date->format($format),
         ];
 
         $stats_data = $this->getPublic('/GetMemberStats', $params);
         return $stats_data;
     }
 
-    protected function checkForErrorsInResponse($response, $json) {
-        $is_bad_status_code = ($response->status_code >= 400 AND $response->status_code < 600);
+    protected function checkForErrorsInResponse($response, $json)
+    {
+        $is_bad_status_code = ($response->status_code >= 400 and $response->status_code < 600);
 
         $error_message = null;
         $error_code = 1;
@@ -39,7 +45,7 @@ class StatsDownloadAPIClient extends TokenlyAPI
             // check for error
             if (isset($json['errors'])) {
                 $messages = [];
-                foreach($json['errors'] as $error) {
+                foreach ($json['errors'] as $error) {
                     $messages[] = $error['errorMessage'];
                 }
                 $error_message = is_array($messages) ? implode(", ", $messages) : $messages;
@@ -58,6 +64,5 @@ class StatsDownloadAPIClient extends TokenlyAPI
             throw new APIException($error_message, $error_code);
         }
     }
-
 
 }
