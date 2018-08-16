@@ -31,8 +31,10 @@ class MembersSynchronizer
         $this->team_aggregate_stat_repository = $team_aggregate_stat_repository;
     }
 
-    public function synchronizeDateRange(Carbon $start_date, Carbon $end_date)
+    public function synchronizeDateRange(Carbon $start_date, Carbon $end_date, $report_only = false)
     {
+        $report_output = [];
+
         $working_date = $start_date->copy();
         $working_date->startOfHour();
 
@@ -42,7 +44,10 @@ class MembersSynchronizer
             $period_type = FoldingStat::PERIOD_DAILY;
 
             // Log::debug("Synching PERIOD_DAILY for $working_date");
-            $this->synchronizeMemberStats($working_date, $period_type);
+            $report = $this->synchronizeMemberStats($working_date, $period_type, $report_only);
+            if ($report_only and $report) {
+                $report_output[$working_date.':DAILY'] = $report;
+            }
 
             // increment
             $working_date->addDay(1);
@@ -56,7 +61,10 @@ class MembersSynchronizer
                 $period_type = FoldingStat::PERIOD_HOURLY;
 
                 // Log::debug("Synching PERIOD_HOURLY for $working_date");
-                $this->synchronizeMemberStats($working_date, $period_type);
+                $report = $this->synchronizeMemberStats($working_date, $period_type, $report_only);
+                if ($report_only and $report) {
+                    $report_output[$working_date.':HOURLY'] = $report;
+                }
             }
 
             // increment
@@ -66,10 +74,12 @@ class MembersSynchronizer
         // always sync aggregate stats after updating member stats records
         $this->member_aggregate_stat_repository->aggregateStats();
         $this->team_aggregate_stat_repository->aggregateStats();
+
+        return $report_output;
     }
 
     // public for testing only - use synchronizeDateRange
-    public function synchronizeMemberStats(Carbon $start_date, $period_type)
+    public function synchronizeMemberStats(Carbon $start_date, $period_type, $report_only = false)
     {
         $start_date = $start_date->copy()->startOfHour();
         $with_time = true;
@@ -97,7 +107,6 @@ class MembersSynchronizer
 
         // echo "start: $start_date\n";
         // echo "end: $end_date\n";
-        $existing_members_by_key = $this->folding_member_repository->allMemberAttributesByUniqueKey();
         try {
             $stats_result = $this->stats_api_client->getMemberStats($start_date, $end_date, $with_time);
         } catch (Exception $e) {
@@ -107,6 +116,11 @@ class MembersSynchronizer
             ]);
             return;
         }
+        if ($report_only) {
+            return $this->countStatsForReport($stats_result);
+        }
+
+        $existing_members_by_key = $this->folding_member_repository->allMemberAttributesByUniqueKey();
         $new_members_by_key = collect($stats_result['members'])->keyBy(function ($m) {
             return $m['userName'] . '|' . $m['teamNumber'];
         });
@@ -117,6 +131,8 @@ class MembersSynchronizer
         // member record stats
         $existing_member_and_team_ids_by_key = $this->folding_member_repository->allMemberAndTeamIdsByUniqueKey();
         $this->synchronizeMemberStatRecords($new_members_by_key, $existing_member_and_team_ids_by_key, $start_date, $period_type);
+
+        return null;
     }
 
     // recent
@@ -144,6 +160,26 @@ class MembersSynchronizer
     }
 
     // ------------------------------------------------------------------------
+
+    protected function countStatsForReport($stats_result)
+    {
+        $out = [
+            'params' => $stats_result['params'],
+        ];
+        $total_points = 0;
+        $member_count = 0;
+        foreach($stats_result['members'] as $member) {
+            $total_points += $member['pointsGained'];
+            $member_count += 1;
+        }
+
+        $out['total_points'] = $total_points;
+        $out['member_count'] = $member_count;
+
+        Log::debug(json_encode($out, 192));
+
+        return $out;
+    }
 
     protected function synchronizeMemberRecords($existing_members_by_key, $new_members_by_key)
     {
@@ -342,14 +378,13 @@ class MembersSynchronizer
 
     }
 
-
     protected function normalizeMemberVarsFromApi($member_vars)
     {
         if (!isset($member_vars['userName'])) {
-            throw new Exception("userName not found for member vars: ".json_encode($member_vars), 1);
+            throw new Exception("userName not found for member vars: " . json_encode($member_vars), 1);
         }
         if (!isset($member_vars['teamNumber'])) {
-            throw new Exception("teamNumber not found for member vars: ".json_encode($member_vars), 1);
+            throw new Exception("teamNumber not found for member vars: " . json_encode($member_vars), 1);
         }
 
         // no friendly name

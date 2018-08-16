@@ -32,6 +32,10 @@ class StatsDownloadAPIClient extends TokenlyAPI
         ];
 
         $stats_data = $this->getPublic('/GetMemberStats', $params);
+
+        // also return params
+        $stats_data['params'] = $params;
+
         return $stats_data;
     }
 

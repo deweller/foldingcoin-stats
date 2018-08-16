@@ -19,6 +19,7 @@ class SyncStats extends Command
         { --all : Sync all available data }
         { --days= : Number of days to sync }
         { --hours= : Number of hours to sync }
+        { --report-only : Just report stat totals instead of syncing }
     ';
 
     /**
@@ -41,6 +42,7 @@ class SyncStats extends Command
         $days = $this->option('days');
         $hours = $this->option('hours');
         $sync_all = $this->option('all');
+        $report_only = $this->option('report-only');
 
         if (!$days and !$hours and !$sync_all) {
             Log::warning("No time specified");
@@ -64,7 +66,11 @@ class SyncStats extends Command
         // sync stats
         $this->comment('syncing from '.$start.' to '.$end);
         Log::debug('syncing from '.$start.' to '.$end);
-        $members_synchronizer->synchronizeDateRange($start, $end);
+        $report_output = $members_synchronizer->synchronizeDateRange($start, $end, $report_only);
+
+        if ($report_only) {
+            $this->info(json_encode($report_output, 192));
+        }
 
         Log::debug("End sync member stats");
         $this->info("End sync member stats");
