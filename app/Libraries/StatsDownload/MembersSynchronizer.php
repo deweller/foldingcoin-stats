@@ -108,9 +108,36 @@ class MembersSynchronizer
         // echo "start: $start_date\n";
         // echo "end: $end_date\n";
         try {
-            $stats_result = $this->stats_api_client->getMemberStats($start_date, $end_date, $with_time);
+            $attempts = 0;
+            $allowed_attempts = 6;
+            while (true) {
+                ++$attempts;
+                try {
+                    $stats_result = $this->stats_api_client->getMemberStats($start_date, $end_date, $with_time);
+                    break;
+                } catch (Exception $e) {
+                    if ($e->getCode() == 9000) {
+                        EventLog::logError('stats.failed', $e, [
+                            'attempts' => $attempts,
+                            'errorCode' => $e->getCode(),
+                            'startDate' => $start_date,
+                            'period' => $period_type,
+                        ]);
+                        if ($attempts >= $allowed_attempts) {
+                            throw $e;
+                        }
+
+                        // try again in a few seconds (with backoff)
+                        $sleep_seconds = $attempts * 10;
+                        Log::debug("sleeping for {$sleep_seconds} seconds");
+                        sleep($sleep_seconds);
+                    } else {
+                        throw $e;
+                    }
+                }
+            }
         } catch (Exception $e) {
-            EventLog::logError('stats.failed', $e, [
+            EventLog::logError('stats.failedPermanently', $e, [
                 'startDate' => $start_date,
                 'period' => $period_type,
             ]);
