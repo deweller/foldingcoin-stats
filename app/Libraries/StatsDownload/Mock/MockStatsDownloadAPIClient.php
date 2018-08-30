@@ -190,6 +190,10 @@ class MockStatsDownloadAPIClient extends StatsDownloadAPIClient
                     }
                     $day_stat['pointsGained'] = $day_stat['workUnitsGained'] * $faker->numberBetween(150, 250);
 
+                    // static start points
+                    $day_stat['startPoints'] = 1000;
+                    $day_stat['startWorkUnits'] = 10;
+
                     $day_stats[] = $day_stat;
                 }
                 $this->mock_member_stats_by_date[$working_date->toAtomString()] = $day_stats;
