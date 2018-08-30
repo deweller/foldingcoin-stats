@@ -57,6 +57,11 @@ export function init(config) {
         exports.load()
     }
 
+    exports.getCurrentPage = function() {
+        return currentPage
+    }
+
+
     exports.toggleSort = function(field, defaultDirection) {
         let direction = defaultDirection || 'desc'
         if (currentSort != null && field == currentSort) {

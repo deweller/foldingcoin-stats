@@ -70,6 +70,10 @@ function init(config) {
         exports.load();
     };
 
+    exports.getCurrentPage = function () {
+        return currentPage;
+    };
+
     exports.toggleSort = function (field, defaultDirection) {
         var direction = defaultDirection || 'desc';
         if (currentSort != null && field == currentSort) {
@@ -219,6 +223,8 @@ Vue.component('member-display', __webpack_require__(184));
 
 Vue.component('team-list', __webpack_require__(187));
 Vue.component('team-display', __webpack_require__(190));
+
+Vue.component('paging', __webpack_require__(208));
 
 // vue filters
 Vue.filter('shortbitcoinaddress', function (value) {
@@ -23323,15 +23329,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 var Pager = __webpack_require__(141);
@@ -23456,437 +23453,354 @@ var render = function() {
       _c("error-panel", { attrs: { errormsg: _vm.errorMsg } }),
       _vm._v(" "),
       _vm.members.length > 0 || _vm.loading || _vm.paging.isSearch
-        ? _c("div", { class: { loading: _vm.loading } }, [
-            _c("h3", [_vm._v("FoldingCoin Participants")]),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "mt-4 mb-2",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.doSearch($event)
+        ? _c(
+            "div",
+            { class: { loading: _vm.loading } },
+            [
+              _c("h3", [_vm._v("FoldingCoin Participants")]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  staticClass: "mt-4 mb-2",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.doSearch($event)
+                    }
                   }
-                }
-              },
-              [
-                _c("h5", [_vm._v("Filter Results")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-row align-items-center" }, [
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "sr-only",
-                        attrs: { for: "SearchUsername" }
-                      },
-                      [_vm._v("Username")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "input-group mb-2" }, [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.searchUsername,
-                            expression: "searchUsername"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "SearchUsername",
-                          placeholder: ""
-                        },
-                        domProps: { value: _vm.searchUsername },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.searchUsername = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  ]),
+                },
+                [
+                  _c("h5", [_vm._v("Filter Results")]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "sr-only",
-                        attrs: { for: "SearchBitcoinAddress" }
-                      },
-                      [_vm._v("Bitcoin Address")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "input-group mb-2" }, [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.searchBitcoinAddress,
-                            expression: "searchBitcoinAddress"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "SearchBitcoinAddress",
-                          placeholder: ""
+                  _c("div", { staticClass: "form-row align-items-center" }, [
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "sr-only",
+                          attrs: { for: "SearchUsername" }
                         },
-                        domProps: { value: _vm.searchBitcoinAddress },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                        [_vm._v("Username")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group mb-2" }, [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.searchUsername,
+                              expression: "searchUsername"
                             }
-                            _vm.searchBitcoinAddress = $event.target.value
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "SearchUsername",
+                            placeholder: ""
+                          },
+                          domProps: { value: _vm.searchUsername },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.searchUsername = $event.target.value
+                            }
                           }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-fldcdarkred mb-2",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Search")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary mb-2",
-                        attrs: { type: "button" },
-                        on: { click: _vm.clearSearch }
-                      },
-                      [_vm._v("Clear Search")]
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _vm.members.length > 0
-              ? _c("table", { staticClass: "table table-sm" }, [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#sort" },
-                            on: {
-                              click: function($event) {
-                                _vm.pager.toggleSort("userName", "asc")
-                              }
-                            }
-                          },
-                          [
-                            _vm.paging.sort == "userName"
-                              ? _c("i", {
-                                  class: {
-                                    fa: true,
-                                    "fa-sort-down":
-                                      _vm.paging.sortDirection == "desc",
-                                    "fa-sort-up":
-                                      _vm.paging.sortDirection == "asc"
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" \n                        Username")
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "d-none d-md-block" }, [
-                        _vm._v("Address")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#sort" },
-                            on: {
-                              click: function($event) {
-                                _vm.pager.toggleSort("dayPoints", "desc")
-                              }
-                            }
-                          },
-                          [
-                            _vm.paging.sort == "dayPoints"
-                              ? _c("i", {
-                                  class: {
-                                    fa: true,
-                                    "fa-sort-down":
-                                      _vm.paging.sortDirection == "desc",
-                                    "fa-sort-up":
-                                      _vm.paging.sortDirection == "asc"
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" \n                        24h Points")
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#sort" },
-                            on: {
-                              click: function($event) {
-                                _vm.pager.toggleSort("weekPoints", "desc")
-                              }
-                            }
-                          },
-                          [
-                            _vm.paging.sort == "weekPoints"
-                              ? _c("i", {
-                                  class: {
-                                    fa: true,
-                                    "fa-sort-down":
-                                      _vm.paging.sortDirection == "desc",
-                                    "fa-sort-up":
-                                      _vm.paging.sortDirection == "asc"
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" \n                        7d Points")
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#sort" },
-                            on: {
-                              click: function($event) {
-                                _vm.pager.toggleSort("allPoints", "desc")
-                              }
-                            }
-                          },
-                          [
-                            _vm.paging.sort == "allPoints"
-                              ? _c("i", {
-                                  class: {
-                                    fa: true,
-                                    "fa-sort-down":
-                                      _vm.paging.sortDirection == "desc",
-                                    "fa-sort-up":
-                                      _vm.paging.sortDirection == "asc"
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" \n                        Total Points")
-                          ]
-                        )
+                        })
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "sr-only",
+                          attrs: { for: "SearchBitcoinAddress" }
+                        },
+                        [_vm._v("Bitcoin Address")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group mb-2" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.searchBitcoinAddress,
+                              expression: "searchBitcoinAddress"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "SearchBitcoinAddress",
+                            placeholder: ""
+                          },
+                          domProps: { value: _vm.searchBitcoinAddress },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.searchBitcoinAddress = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-fldcdarkred mb-2",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Search")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary mb-2",
+                          attrs: { type: "button" },
+                          on: { click: _vm.clearSearch }
+                        },
+                        [_vm._v("Clear Search")]
+                      )
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.members, function(member) {
-                      return _c("tr", [
-                        _c("td", [
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _vm.members.length > 0
+                ? _c("table", { staticClass: "table table-sm" }, [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [
                           _c(
                             "a",
-                            { attrs: { href: "/member/" + member.userName } },
-                            [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "d-block d-md-none text-truncate",
-                                  staticStyle: { "max-width": "120px" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            " +
-                                      _vm._s(member.friendlyName) +
-                                      "\n                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "d-none d-md-block text-truncate",
-                                  staticStyle: { "max-width": "160px" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                            " +
-                                      _vm._s(member.friendlyName) +
-                                      "\n                        "
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "d-none d-md-block" }, [
-                          _c(
-                            "span",
-                            { attrs: { title: member.bitcoinAddress } },
-                            [
-                              _vm._v(
-                                _vm._s(
-                                  _vm._f("shortbitcoinaddress")(
-                                    member.bitcoinAddress
-                                  )
-                                )
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(_vm._s(_vm._f("points")(member.dayPoints)))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(_vm._s(_vm._f("points")(member.weekPoints)))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(_vm._s(_vm._f("points")(member.allPoints)))
-                        ])
-                      ])
-                    })
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.members.length == 0
-              ? _c("div", {}, [
-                  _c("p", [_vm._v("No results found for this search.")])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.paging.count > 0
-              ? _c("div", { staticClass: "text-center" }, [
-                  _vm._v(
-                    "Showing " +
-                      _vm._s(_vm.members.length) +
-                      " of " +
-                      _vm._s(_vm.paging.count) +
-                      " Folding Members"
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.paging.pageCount > 1
-              ? _c("div", [
-                  _c("nav", { attrs: { "aria-label": "Page navigation" } }, [
-                    _c(
-                      "ul",
-                      { staticClass: "pagination justify-content-center" },
-                      [
-                        _c(
-                          "li",
-                          {
-                            class: {
-                              "page-item": true,
-                              disabled: !_vm.paging.hasPrevious
-                            }
-                          },
-                          [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "page-link",
-                                attrs: { href: "#", tabindex: "-1" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.pager.prevPage()
-                                  }
-                                }
-                              },
-                              [_vm._v("Previous")]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.paging.pageCount, function(pg) {
-                          return _c(
-                            "li",
                             {
-                              class: {
-                                "page-item": true,
-                                active: _vm.paging.page == pg - 1
+                              attrs: { href: "#sort" },
+                              on: {
+                                click: function($event) {
+                                  _vm.pager.toggleSort("userName", "asc")
+                                }
                               }
                             },
                             [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "page-link",
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.pager.goToPage(pg - 1)
+                              _vm.paging.sort == "userName"
+                                ? _c("i", {
+                                    class: {
+                                      fa: true,
+                                      "fa-sort-down":
+                                        _vm.paging.sortDirection == "desc",
+                                      "fa-sort-up":
+                                        _vm.paging.sortDirection == "asc"
                                     }
-                                  }
-                                },
-                                [_vm._v(_vm._s(pg))]
-                              )
+                                  })
+                                : _vm._e(),
+                              _vm._v(" \n                        Username")
                             ]
                           )
-                        }),
+                        ]),
                         _vm._v(" "),
-                        _c(
-                          "li",
-                          {
-                            class: {
-                              "page-item": true,
-                              disabled: !_vm.paging.hasNext
-                            }
-                          },
-                          [
+                        _c("th", { staticClass: "d-none d-md-block" }, [
+                          _vm._v("Address")
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#sort" },
+                              on: {
+                                click: function($event) {
+                                  _vm.pager.toggleSort("dayPoints", "desc")
+                                }
+                              }
+                            },
+                            [
+                              _vm.paging.sort == "dayPoints"
+                                ? _c("i", {
+                                    class: {
+                                      fa: true,
+                                      "fa-sort-down":
+                                        _vm.paging.sortDirection == "desc",
+                                      "fa-sort-up":
+                                        _vm.paging.sortDirection == "asc"
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" \n                        24h Points")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#sort" },
+                              on: {
+                                click: function($event) {
+                                  _vm.pager.toggleSort("weekPoints", "desc")
+                                }
+                              }
+                            },
+                            [
+                              _vm.paging.sort == "weekPoints"
+                                ? _c("i", {
+                                    class: {
+                                      fa: true,
+                                      "fa-sort-down":
+                                        _vm.paging.sortDirection == "desc",
+                                      "fa-sort-up":
+                                        _vm.paging.sortDirection == "asc"
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" \n                        7d Points")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#sort" },
+                              on: {
+                                click: function($event) {
+                                  _vm.pager.toggleSort("allPoints", "desc")
+                                }
+                              }
+                            },
+                            [
+                              _vm.paging.sort == "allPoints"
+                                ? _c("i", {
+                                    class: {
+                                      fa: true,
+                                      "fa-sort-down":
+                                        _vm.paging.sortDirection == "desc",
+                                      "fa-sort-up":
+                                        _vm.paging.sortDirection == "asc"
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" \n                        Total Points")
+                            ]
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.members, function(member) {
+                        return _c("tr", [
+                          _c("td", [
                             _c(
                               "a",
-                              {
-                                staticClass: "page-link",
-                                attrs: { href: "#" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.pager.nextPage()
-                                  }
-                                }
-                              },
-                              [_vm._v("Next")]
+                              { attrs: { href: "/member/" + member.userName } },
+                              [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "d-block d-md-none text-truncate",
+                                    staticStyle: { "max-width": "120px" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(member.friendlyName) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "d-none d-md-block text-truncate",
+                                    staticStyle: { "max-width": "160px" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(member.friendlyName) +
+                                        "\n                        "
+                                    )
+                                  ]
+                                )
+                              ]
                             )
-                          ]
-                        )
-                      ],
-                      2
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "d-none d-md-block" }, [
+                            _c(
+                              "span",
+                              { attrs: { title: member.bitcoinAddress } },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm._f("shortbitcoinaddress")(
+                                      member.bitcoinAddress
+                                    )
+                                  )
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("points")(member.dayPoints)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("points")(member.weekPoints)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("points")(member.allPoints)))
+                          ])
+                        ])
+                      })
                     )
                   ])
-                ])
-              : _vm._e()
-          ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.members.length == 0
+                ? _c("div", {}, [
+                    _c("p", [_vm._v("No results found for this search.")])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.paging.count > 0
+                ? _c("div", { staticClass: "text-center" }, [
+                    _vm._v(
+                      "Showing " +
+                        _vm._s(_vm.members.length) +
+                        " of " +
+                        _vm._s(_vm.paging.count) +
+                        " Folding Members"
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("paging", { attrs: { pager: _vm.pager, paging: _vm.paging } })
+            ],
+            1
+          )
         : _c("div", [_vm._v("No members are available to show.")])
     ],
     1
@@ -24393,15 +24307,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 var Pager = __webpack_require__(141);
@@ -24526,414 +24431,338 @@ var render = function() {
       _c("error-panel", { attrs: { errormsg: _vm.errorMsg } }),
       _vm._v(" "),
       _vm.teams.length > 0 || _vm.loading || _vm.paging.isSearch
-        ? _c("div", { class: { loading: _vm.loading } }, [
-            _c("h3", [_vm._v("FoldingCoin Teams")]),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "mt-4 mb-2",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.doSearch($event)
+        ? _c(
+            "div",
+            { class: { loading: _vm.loading } },
+            [
+              _c("h3", [_vm._v("FoldingCoin Teams")]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  staticClass: "mt-4 mb-2",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.doSearch($event)
+                    }
                   }
-                }
-              },
-              [
-                _c("h5", [_vm._v("Filter Results")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-row align-items-center" }, [
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "label",
-                      { staticClass: "sr-only", attrs: { for: "SearchName" } },
-                      [_vm._v("Name")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "input-group mb-2" }, [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.searchName,
-                            expression: "searchName"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "SearchName",
-                          placeholder: ""
+                },
+                [
+                  _c("h5", [_vm._v("Filter Results")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-row align-items-center" }, [
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "sr-only",
+                          attrs: { for: "SearchName" }
                         },
-                        domProps: { value: _vm.searchName },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.searchName = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "sr-only",
-                        attrs: { for: "SearchTeamNumber" }
-                      },
-                      [_vm._v("Team Number")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "input-group mb-2" }, [
-                      _vm._m(1),
+                        [_vm._v("Name")]
+                      ),
                       _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.searchNumber,
-                            expression: "searchNumber"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "SearchTeamNumber",
-                          placeholder: ""
-                        },
-                        domProps: { value: _vm.searchNumber },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.searchNumber = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-fldcdarkred mb-2",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Search")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary mb-2",
-                        attrs: { type: "button" },
-                        on: { click: _vm.clearSearch }
-                      },
-                      [_vm._v("Clear Search")]
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _vm.teams.length > 0
-              ? _c("table", { staticClass: "table table-sm" }, [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#sort" },
-                            on: {
-                              click: function($event) {
-                                _vm.pager.toggleSort("name", "asc")
-                              }
-                            }
-                          },
-                          [
-                            _vm.paging.sort == "name"
-                              ? _c("i", {
-                                  class: {
-                                    fa: true,
-                                    "fa-sort-down":
-                                      _vm.paging.sortDirection == "desc",
-                                    "fa-sort-up":
-                                      _vm.paging.sortDirection == "asc"
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" \n                        Name")
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#sort" },
-                            on: {
-                              click: function($event) {
-                                _vm.pager.toggleSort("number", "asc")
-                              }
-                            }
-                          },
-                          [
-                            _vm.paging.sort == "number"
-                              ? _c("i", {
-                                  class: {
-                                    fa: true,
-                                    "fa-sort-down":
-                                      _vm.paging.sortDirection == "desc",
-                                    "fa-sort-up":
-                                      _vm.paging.sortDirection == "asc"
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" \n                        Team Number")
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#sort" },
-                            on: {
-                              click: function($event) {
-                                _vm.pager.toggleSort("dayPoints", "desc")
-                              }
-                            }
-                          },
-                          [
-                            _vm.paging.sort == "dayPoints"
-                              ? _c("i", {
-                                  class: {
-                                    fa: true,
-                                    "fa-sort-down":
-                                      _vm.paging.sortDirection == "desc",
-                                    "fa-sort-up":
-                                      _vm.paging.sortDirection == "asc"
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" \n                        24h Points")
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#sort" },
-                            on: {
-                              click: function($event) {
-                                _vm.pager.toggleSort("weekPoints", "desc")
-                              }
-                            }
-                          },
-                          [
-                            _vm.paging.sort == "weekPoints"
-                              ? _c("i", {
-                                  class: {
-                                    fa: true,
-                                    "fa-sort-down":
-                                      _vm.paging.sortDirection == "desc",
-                                    "fa-sort-up":
-                                      _vm.paging.sortDirection == "asc"
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" \n                        7d Points")
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#sort" },
-                            on: {
-                              click: function($event) {
-                                _vm.pager.toggleSort("allPoints", "desc")
-                              }
-                            }
-                          },
-                          [
-                            _vm.paging.sort == "allPoints"
-                              ? _c("i", {
-                                  class: {
-                                    fa: true,
-                                    "fa-sort-down":
-                                      _vm.paging.sortDirection == "desc",
-                                    "fa-sort-up":
-                                      _vm.paging.sortDirection == "asc"
-                                  }
-                                })
-                              : _vm._e(),
-                            _vm._v(" \n                        Total Points")
-                          ]
-                        )
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.teams, function(team) {
-                      return _c("tr", [
-                        _c("td", [
-                          _c("a", { attrs: { href: "/team/" + team.number } }, [
-                            _vm._v(_vm._s(team.name))
-                          ])
-                        ]),
+                      _c("div", { staticClass: "input-group mb-2" }, [
+                        _vm._m(0),
                         _vm._v(" "),
-                        _c("td", [
-                          _c("a", { attrs: { href: "/team/" + team.number } }, [
-                            _vm._v(_vm._s(team.number))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(_vm._s(_vm._f("points")(team.dayPoints)))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(_vm._s(_vm._f("points")(team.weekPoints)))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(_vm._s(_vm._f("points")(team.allPoints)))
-                        ])
-                      ])
-                    })
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.teams.length == 0
-              ? _c("div", {}, [
-                  _c("p", [_vm._v("No results found for this search.")])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.paging.count > 0
-              ? _c("div", { staticClass: "text-center" }, [
-                  _vm._v(
-                    "Showing " +
-                      _vm._s(_vm.teams.length) +
-                      " of " +
-                      _vm._s(_vm.paging.count) +
-                      " Folding Teams"
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.paging.pageCount > 1
-              ? _c("div", [
-                  _c("nav", { attrs: { "aria-label": "Page navigation" } }, [
-                    _c(
-                      "ul",
-                      { staticClass: "pagination justify-content-center" },
-                      [
-                        _c(
-                          "li",
-                          {
-                            class: {
-                              "page-item": true,
-                              disabled: !_vm.paging.hasPrevious
-                            }
-                          },
-                          [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "page-link",
-                                attrs: { href: "#", tabindex: "-1" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.pager.prevPage()
-                                  }
-                                }
-                              },
-                              [_vm._v("Previous")]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.paging.pageCount, function(pg) {
-                          return _c(
-                            "li",
+                        _c("input", {
+                          directives: [
                             {
-                              class: {
-                                "page-item": true,
-                                active: _vm.paging.page == pg - 1
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.searchName,
+                              expression: "searchName"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "SearchName",
+                            placeholder: ""
+                          },
+                          domProps: { value: _vm.searchName },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.searchName = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "sr-only",
+                          attrs: { for: "SearchTeamNumber" }
+                        },
+                        [_vm._v("Team Number")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "input-group mb-2" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.searchNumber,
+                              expression: "searchNumber"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "SearchTeamNumber",
+                            placeholder: ""
+                          },
+                          domProps: { value: _vm.searchNumber },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.searchNumber = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-fldcdarkred mb-2",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Search")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary mb-2",
+                          attrs: { type: "button" },
+                          on: { click: _vm.clearSearch }
+                        },
+                        [_vm._v("Clear Search")]
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _vm.teams.length > 0
+                ? _c("table", { staticClass: "table table-sm" }, [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#sort" },
+                              on: {
+                                click: function($event) {
+                                  _vm.pager.toggleSort("name", "asc")
+                                }
                               }
                             },
                             [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "page-link",
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.pager.goToPage(pg - 1)
+                              _vm.paging.sort == "name"
+                                ? _c("i", {
+                                    class: {
+                                      fa: true,
+                                      "fa-sort-down":
+                                        _vm.paging.sortDirection == "desc",
+                                      "fa-sort-up":
+                                        _vm.paging.sortDirection == "asc"
                                     }
-                                  }
-                                },
-                                [_vm._v(_vm._s(pg))]
-                              )
+                                  })
+                                : _vm._e(),
+                              _vm._v(" \n                        Name")
                             ]
                           )
-                        }),
+                        ]),
                         _vm._v(" "),
-                        _c(
-                          "li",
-                          {
-                            class: {
-                              "page-item": true,
-                              disabled: !_vm.paging.hasNext
-                            }
-                          },
-                          [
+                        _c("th", { staticClass: "d-none d-md-block" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#sort" },
+                              on: {
+                                click: function($event) {
+                                  _vm.pager.toggleSort("number", "asc")
+                                }
+                              }
+                            },
+                            [
+                              _vm.paging.sort == "number"
+                                ? _c("i", {
+                                    class: {
+                                      fa: true,
+                                      "fa-sort-down":
+                                        _vm.paging.sortDirection == "desc",
+                                      "fa-sort-up":
+                                        _vm.paging.sortDirection == "asc"
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" \n                        Team Number")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#sort" },
+                              on: {
+                                click: function($event) {
+                                  _vm.pager.toggleSort("dayPoints", "desc")
+                                }
+                              }
+                            },
+                            [
+                              _vm.paging.sort == "dayPoints"
+                                ? _c("i", {
+                                    class: {
+                                      fa: true,
+                                      "fa-sort-down":
+                                        _vm.paging.sortDirection == "desc",
+                                      "fa-sort-up":
+                                        _vm.paging.sortDirection == "asc"
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" \n                        24h Points")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "d-none d-sm-block" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#sort" },
+                              on: {
+                                click: function($event) {
+                                  _vm.pager.toggleSort("weekPoints", "desc")
+                                }
+                              }
+                            },
+                            [
+                              _vm.paging.sort == "weekPoints"
+                                ? _c("i", {
+                                    class: {
+                                      fa: true,
+                                      "fa-sort-down":
+                                        _vm.paging.sortDirection == "desc",
+                                      "fa-sort-up":
+                                        _vm.paging.sortDirection == "asc"
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" \n                        7d Points")
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#sort" },
+                              on: {
+                                click: function($event) {
+                                  _vm.pager.toggleSort("allPoints", "desc")
+                                }
+                              }
+                            },
+                            [
+                              _vm.paging.sort == "allPoints"
+                                ? _c("i", {
+                                    class: {
+                                      fa: true,
+                                      "fa-sort-down":
+                                        _vm.paging.sortDirection == "desc",
+                                      "fa-sort-up":
+                                        _vm.paging.sortDirection == "asc"
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" \n                        Total Points")
+                            ]
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.teams, function(team) {
+                        return _c("tr", [
+                          _c("td", [
                             _c(
                               "a",
-                              {
-                                staticClass: "page-link",
-                                attrs: { href: "#" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.pager.nextPage()
-                                  }
-                                }
-                              },
-                              [_vm._v("Next")]
+                              { attrs: { href: "/team/" + team.number } },
+                              [_vm._v(_vm._s(team.name))]
                             )
-                          ]
-                        )
-                      ],
-                      2
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "d-none d-md-block" }, [
+                            _c(
+                              "a",
+                              { attrs: { href: "/team/" + team.number } },
+                              [_vm._v(_vm._s(team.number))]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("points")(team.dayPoints)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "d-none d-sm-block" }, [
+                            _vm._v(_vm._s(_vm._f("points")(team.weekPoints)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("points")(team.allPoints)))
+                          ])
+                        ])
+                      })
                     )
                   ])
-                ])
-              : _vm._e()
-          ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.teams.length == 0
+                ? _c("div", {}, [
+                    _c("p", [_vm._v("No results found for this search.")])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.paging.count > 0
+                ? _c("div", { staticClass: "text-center" }, [
+                    _vm._v(
+                      "Showing " +
+                        _vm._s(_vm.teams.length) +
+                        " of " +
+                        _vm._s(_vm.paging.count) +
+                        " Folding Teams"
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("paging", { attrs: { pager: _vm.pager, paging: _vm.paging } })
+            ],
+            1
+          )
         : _c("div", [_vm._v("No teams are available to show.")])
     ],
     1
@@ -25387,6 +25216,226 @@ if (false) {
 
 module.exports = __webpack_require__(169);
 
+
+/***/ }),
+
+/***/ 208:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(209)
+/* template */
+var __vue_template__ = __webpack_require__(210)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Paging.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1659f2fa", Component.options)
+  } else {
+    hotAPI.reload("data-v-1659f2fa", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 209:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        paging: Object,
+        pager: Object,
+        maxPagesToShow: Number
+    },
+
+    data: function data() {
+        return {};
+    },
+
+    methods: {},
+    computed: {
+        pagesList: function pagesList() {
+            var pagesList = [];
+
+            var maxPagesToShow = this.maxPagesToShow || 9;
+
+            // calculate start and end
+            var start = 1;
+            var end = this.paging.pageCount;
+
+            if (end - start >= maxPagesToShow) {
+                start = Math.max(Math.ceil(this.pager.getCurrentPage() + 1 - maxPagesToShow / 2), 1);
+                end = start + maxPagesToShow - 1;
+
+                if (end > this.paging.pageCount) {
+                    start = end - (maxPagesToShow - 1);
+                }
+            }
+
+            for (var n = start; n <= end; n++) {
+                pagesList.push(n);
+            }
+
+            return pagesList;
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 210:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.paging.pageCount > 1
+    ? _c("div", [
+        _c("nav", { attrs: { "aria-label": "Page navigation" } }, [
+          _c(
+            "ul",
+            { staticClass: "pagination justify-content-center" },
+            [
+              _c(
+                "li",
+                {
+                  class: {
+                    "page-item": true,
+                    disabled: !_vm.paging.hasPrevious
+                  }
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "page-link",
+                      attrs: { href: "#previous-page", tabindex: "-1" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.pager.prevPage()
+                        }
+                      }
+                    },
+                    [_vm._v("«")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.pagesList, function(pg) {
+                return _c(
+                  "li",
+                  {
+                    class: {
+                      "page-item": true,
+                      active: _vm.paging.page == pg - 1
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "page-link",
+                        attrs: { href: "#page-" + pg },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.pager.goToPage(pg - 1)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(pg))]
+                    )
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "li",
+                { class: { "page-item": true, disabled: !_vm.paging.hasNext } },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "page-link",
+                      attrs: { href: "#next-page" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.pager.nextPage()
+                        }
+                      }
+                    },
+                    [_vm._v("»")]
+                  )
+                ]
+              )
+            ],
+            2
+          )
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1659f2fa", module.exports)
+  }
+}
 
 /***/ }),
 

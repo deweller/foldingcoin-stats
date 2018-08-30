@@ -78,19 +78,10 @@
             </div>
 
             <div class="text-center" v-if="paging.count > 0">Showing {{ members.length }} of {{ paging.count }} Folding Members</div>
-            <div v-if="paging.pageCount > 1">
-                <nav aria-label="Page navigation">
-                  <ul class="pagination justify-content-center">
-                    <li :class="{'page-item': true, 'disabled': !paging.hasPrevious}">
-                      <a @click="pager.prevPage()" class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li v-for="pg in paging.pageCount" :class="{'page-item': true, active: paging.page == pg-1}"><a @click="pager.goToPage(pg-1)" class="page-link" href="#">{{ pg }}</a></li>
-                    <li :class="{'page-item': true, 'disabled': !paging.hasNext}">
-                      <a @click="pager.nextPage()" class="page-link" href="#">Next</a>
-                    </li>
-                  </ul>
-                </nav>
-            </div>
+            <paging
+                :pager="pager"
+                :paging="paging"
+            ></paging>
         </div>
 
         <!-- no members -->

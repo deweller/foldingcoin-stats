@@ -42,13 +42,13 @@
                         <th><a @click="pager.toggleSort('name', 'asc')" href="#sort">
                             <i v-if="paging.sort == 'name'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             Name</a></th>
-                        <th><a @click="pager.toggleSort('number', 'asc')" href="#sort">
+                        <th class="d-none d-md-block"><a @click="pager.toggleSort('number', 'asc')" href="#sort">
                             <i v-if="paging.sort == 'number'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             Team Number</a></th>
                         <th><a @click="pager.toggleSort('dayPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'dayPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             24h Points</a></th>
-                        <th><a @click="pager.toggleSort('weekPoints', 'desc')" href="#sort">
+                        <th class="d-none d-sm-block"><a @click="pager.toggleSort('weekPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'weekPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             7d Points</a></th>
                         <th><a @click="pager.toggleSort('allPoints', 'desc')" href="#sort">
@@ -60,10 +60,10 @@
                 <tbody>
                     <tr v-for="team in teams">
                         <td><a :href="'/team/'+team.number">{{ team.name }}</a></td>
-                        <td><a :href="'/team/'+team.number">{{ team.number }}</a></td>
+                        <td class="d-none d-md-block"><a :href="'/team/'+team.number">{{ team.number }}</a></td>
 
                         <td>{{ team.dayPoints | points }}</td>
-                        <td>{{ team.weekPoints | points }}</td>
+                        <td class="d-none d-sm-block">{{ team.weekPoints | points }}</td>
                         <td>{{ team.allPoints | points }}</td>
                     </tr>
                 </tbody>
@@ -73,20 +73,11 @@
             </div>
 
             <div class="text-center" v-if="paging.count > 0">Showing {{ teams.length }} of {{ paging.count }} Folding Teams</div>
-            <div v-if="paging.pageCount > 1">
-                <nav aria-label="Page navigation">
-                  <ul class="pagination justify-content-center">
-                    <li :class="{'page-item': true, 'disabled': !paging.hasPrevious}">
-                      <a @click="pager.prevPage()" class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li v-for="pg in paging.pageCount" :class="{'page-item': true, active: paging.page == pg-1}"><a @click="pager.goToPage(pg-1)" class="page-link" href="#">{{ pg }}</a></li>
-                    <li :class="{'page-item': true, 'disabled': !paging.hasNext}">
-                      <a @click="pager.nextPage()" class="page-link" href="#">Next</a>
-                    </li>
-                  </ul>
-                </nav>
-            </div>
-        </div>
+            <paging
+                :pager="pager"
+                :paging="paging"
+            ></paging>
+         </div>
 
         <!-- no teams -->
         <div v-else>No teams are available to show.</div>

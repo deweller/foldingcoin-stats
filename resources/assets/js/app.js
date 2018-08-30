@@ -29,6 +29,8 @@ Vue.component('member-display', require('./components/MemberDisplayComponent.vue
 Vue.component('team-list', require('./components/TeamListComponent.vue'));
 Vue.component('team-display', require('./components/TeamDisplayComponent.vue'));
 
+Vue.component('paging', require('./components/Paging.vue'));
+
 // vue filters
 Vue.filter('shortbitcoinaddress', function (value) {
     if (value == null || value.length == 0) {
