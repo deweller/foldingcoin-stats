@@ -232,6 +232,7 @@ class MembersSynchronizer
             $member = $this->folding_member_repository->create([
                 'user_name' => $new_member_vars['userName'],
                 'friendly_name' => $new_member_vars['friendlyName'],
+                'friendly_name_lc' => strtolower($new_member_vars['friendlyName']),
                 'bitcoin_address' => $new_member_vars['bitcoinAddress'],
                 'team_number' => $new_member_vars['teamNumber'],
                 'team_id' => $team_id,
@@ -267,6 +268,7 @@ class MembersSynchronizer
                 $update_vars = [
                     'user_name' => $new_member_vars['userName'],
                     'friendly_name' => $new_member_vars['friendlyName'],
+                    'friendly_name_lc' => strtolower($new_member_vars['friendlyName']),
                     'bitcoin_address' => $new_member_vars['bitcoinAddress'],
                     'team_number' => $new_member_vars['teamNumber'],
                     'team_id' => $team_id,

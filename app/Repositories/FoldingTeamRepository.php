@@ -42,6 +42,7 @@ class FoldingTeamRepository extends BaseRepository
 
             return $this->create([
                 'name' => '',
+                'name_lc' => '',
                 'number' => $team_number,
             ]);
         });

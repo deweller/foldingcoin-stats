@@ -75,7 +75,7 @@ class MembersController extends ApiController
     {
         return [
             'fields' => [
-                'userName' => ['field' => 'friendly_name', 'sortField' => 'friendly_name', 'defaultSortDirection' => 'asc', 'assumeLike' => true,],
+                'userName' => ['field' => 'friendly_name_lc', 'sortField' => 'friendly_name', 'defaultSortDirection' => 'asc', 'assumeLike' => true, 'transformFn' => ['Tokenly\LaravelApiProvider\Filter\Transformers','LCTrimmed'],],
                 'bitcoinAddress' => ['field' => 'bitcoin_address',],
                 'allPoints' => ['sortField' => 'all_points', 'defaultSortDirection' => 'desc'],
                 'weekPoints' => ['sortField' => 'week_points', 'defaultSortDirection' => 'desc'],

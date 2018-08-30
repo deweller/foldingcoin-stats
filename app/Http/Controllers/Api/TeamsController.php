@@ -65,7 +65,7 @@ class TeamsController extends ApiController
     {
         return [
             'fields' => [
-                'name' => ['field' => 'name', 'sortField' => 'name', 'defaultSortDirection' => 'asc', 'assumeLike' => true,],
+                'name' => ['field' => 'name_lc', 'sortField' => 'name', 'defaultSortDirection' => 'asc', 'assumeLike' => true, 'transformFn' => ['Tokenly\LaravelApiProvider\Filter\Transformers','LCTrimmed'],],
                 'number' => ['field' => 'number', 'sortField' => 'number', 'defaultSortDirection' => 'asc', ],
 
                 'allPoints' => ['sortField' => 'all_points', 'defaultSortDirection' => 'desc'],

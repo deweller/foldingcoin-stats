@@ -41,6 +41,7 @@ class TeamSynchronizer
             $team = $this->folding_team_repository->create([
                 'number' => $new_team_vars['teamNumber'],
                 'name' => $new_team_vars['teamName'],
+                'name_lc' => strtolower($new_team_vars['teamName']),
             ]);
             EventLog::debug('team.created', [
                 'number' => $team['number'],
@@ -63,6 +64,7 @@ class TeamSynchronizer
                 $update_vars = [
                     'number' => $new_team_vars['teamNumber'],
                     'name' => $new_team_vars['teamName'],
+                    'name_lc' => strtolower($new_team_vars['teamName']),
                 ];
 
                 $team_model = $this->folding_team_repository->findByTeamNumber($team->number);

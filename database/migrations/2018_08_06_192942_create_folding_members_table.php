@@ -17,7 +17,10 @@ class CreateFoldingMembersTable extends Migration
             $table->increments('id');
 
             $table->string('user_name', 80)->index();
-            $table->string('friendly_name');
+
+            $table->string('friendly_name', 80);
+            $table->string('friendly_name_lc', 80);
+
             $table->string('bitcoin_address')->index();
             $table->integer('team_id')->unsigned()->index();
             $table->string('team_number', 16); // denormalized for efficiency
