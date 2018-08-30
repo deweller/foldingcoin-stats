@@ -337,6 +337,10 @@ class MembersSynchronizer
 
                 'points' => $new_stat_vars['pointsGained'],
                 'work_units' => $new_stat_vars['workUnitsGained'],
+
+                'start_points' => $new_stat_vars['startPoints'],
+                'start_work_units' => $new_stat_vars['startWorkUnits'],
+
                 'start_date' => $start_date,
                 'period_type' => $period_type,
             ]);
@@ -362,6 +366,8 @@ class MembersSynchronizer
             if (
                 (string) $new_stat_vars['pointsGained'] != (string) $stat->points
                 or (string) $new_stat_vars['workUnitsGained'] != (string) $stat->work_units
+                or (string) $new_stat_vars['startPoints'] != (string) $stat->start_points
+                or (string) $new_stat_vars['startWorkUnits'] != (string) $stat->start_work_units
                 or (string) $start_date != (string) $stat->start_date
                 or (string) $period_type != (string) $stat->period_type
                 or (string) $member_id != (string) $stat->member_id
@@ -374,6 +380,8 @@ class MembersSynchronizer
                     'team_id' => $team_id,
                     'points' => $new_stat_vars['pointsGained'],
                     'work_units' => $new_stat_vars['workUnitsGained'],
+                    'start_points' => $new_stat_vars['startPoints'],
+                    'start_work_units' => $new_stat_vars['startWorkUnits'],
                     'start_date' => $start_date,
                     'period_type' => $period_type,
                 ];
@@ -399,6 +407,7 @@ class MembersSynchronizer
             $this->folding_stat_repository->delete($stat_model);
             EventLog::debug('stat.deleted', [
                 'member_id' => $stat->member_id,
+                'start_points' => $stat->start_points,
                 'points' => $stat->points,
                 'start_date' => $stat->start_date,
                 'period_type' => $stat->period_type,

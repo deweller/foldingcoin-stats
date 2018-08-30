@@ -16,6 +16,7 @@ class CreateTeamAggregateStatsTable extends Migration
         Schema::create('team_aggregate_stats', function (Blueprint $table) {
             $table->integer('number')->unique();
             $table->string('name')->index();
+            $table->string('name_lc')->index();
 
             $table->bigInteger('all_points')->default(0)->index();
             $table->bigInteger('all_work_units')->default(0)->index();

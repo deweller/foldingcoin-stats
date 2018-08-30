@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Development;
 
 use App\Repositories\MemberAggregateStatRepository;
+use App\Repositories\TeamAggregateStatRepository;
 use Illuminate\Console\Command;
 
 class AggregateStats extends Command
@@ -26,8 +27,11 @@ class AggregateStats extends Command
      *
      * @return mixed
      */
-    public function handle(MemberAggregateStatRepository $member_aggregate_stat_repository)
-    {
+    public function handle(MemberAggregateStatRepository $member_aggregate_stat_repository, TeamAggregateStatRepository $team_aggregate_stat_repository
+    ) {
+
         $member_aggregate_stat_repository->aggregateStats();
+        $team_aggregate_stat_repository->aggregateStats();
+
     }
 }

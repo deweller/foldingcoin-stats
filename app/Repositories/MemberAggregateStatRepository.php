@@ -19,42 +19,70 @@ class MemberAggregateStatRepository
 
     public function aggregateStats()
     {
-        $all_stats = $this->findAllMembersWithStats();
-        // Log::debug("\$all_stats=".json_encode($all_stats, 192));
+        DB::transaction(function() {
+            $week_and_day_stats = $this->findAllMemberWeekAndDayStats();
+            // Log::debug("\$week_and_day_stats=".json_encode($week_and_day_stats, 192));
+            $all_stats = $this->findAllMemberTotalStats();
+            // Log::debug("\$all_stats=".json_encode($all_stats, 192));
 
-        // collect by username
-        $by_username = [];
-        $now_string = Carbon::now()->toDateTimeString();
-        foreach($all_stats as $stat_object) {
-            $user_name = $stat_object->user_name;
+            // collect by username
+            $by_username = [];
+            $now_string = Carbon::now()->toDateTimeString();
 
-            if (!isset($by_username[$user_name])) {
-                $by_username[$user_name] = [
-                    'user_name' => $stat_object->user_name,
-                    'friendly_name' => $stat_object->friendly_name,
-                    'bitcoin_address' => $stat_object->bitcoin_address,
-                    'updated_at' => $now_string,
+            // collect week and day stats by username
+            foreach($week_and_day_stats as $stat_object) {
+                $user_name = $stat_object->user_name;
 
-                    'all_points' => 0,
-                    'all_work_units' => 0,
-                    'week_points' => 0,
-                    'week_work_units' => 0,
-                    'day_points' => 0,
-                    'day_work_units' => 0,
-                ];
+                if (!isset($by_username[$user_name])) {
+                    $by_username[$user_name] = [
+                        'user_name' => $stat_object->user_name,
+                        'friendly_name' => $stat_object->friendly_name,
+                        'friendly_name_lc' => $stat_object->friendly_name_lc,
+                        'bitcoin_address' => $stat_object->bitcoin_address,
+                        'updated_at' => $now_string,
+
+                        'all_points' => 0,
+                        'all_work_units' => 0,
+                        'week_points' => 0,
+                        'week_work_units' => 0,
+                        'day_points' => 0,
+                        'day_work_units' => 0,
+                    ];
+                }
+
+                $by_username[$user_name]['week_points'] += ($stat_object->week_points ?? 0);
+                $by_username[$user_name]['week_work_units'] += ($stat_object->week_work_units ?? 0);
+
+                $by_username[$user_name]['day_points'] += ($stat_object->day_points ?? 0);
+                $by_username[$user_name]['day_work_units'] += ($stat_object->day_work_units ?? 0);
             }
 
-            $by_username[$user_name]['all_points'] += ($stat_object->all_points ?? 0);
-            $by_username[$user_name]['all_work_units'] += ($stat_object->all_work_units ?? 0);
+            // collect all time stats by username
+            foreach($all_stats as $stat_object) {
+                $user_name = $stat_object->user_name;
 
-            $by_username[$user_name]['week_points'] += ($stat_object->week_points ?? 0);
-            $by_username[$user_name]['week_work_units'] += ($stat_object->week_work_units ?? 0);
+                if (!isset($by_username[$user_name])) {
+                    $by_username[$user_name] = [
+                        'user_name' => $stat_object->user_name,
+                        'friendly_name' => $stat_object->friendly_name,
+                        'friendly_name_lc' => $stat_object->friendly_name_lc,
+                        'bitcoin_address' => $stat_object->bitcoin_address,
+                        'updated_at' => $now_string,
 
-            $by_username[$user_name]['day_points'] += ($stat_object->day_points ?? 0);
-            $by_username[$user_name]['day_work_units'] += ($stat_object->day_work_units ?? 0);
-        }
+                        'all_points' => 0,
+                        'all_work_units' => 0,
+                        'week_points' => 0,
+                        'week_work_units' => 0,
+                        'day_points' => 0,
+                        'day_work_units' => 0,
+                    ];
+                }
 
-        DB::transaction(function() use ($by_username) {
+                $by_username[$user_name]['all_points'] += ($stat_object->all_points ?? 0);
+                $by_username[$user_name]['all_work_units'] += ($stat_object->all_work_units ?? 0);
+            }
+
+
             // delete all
             DB::table('member_aggregate_stats')->delete();
 
@@ -142,24 +170,28 @@ class MemberAggregateStatRepository
 
     // ------------------------------------------------------------------------
 
-    protected function findAllMembersWithStats()
+    protected function findAllMemberTotalStats()
+    {
+        $query = DB::table('folding_stats');
+        $query->select([
+            'folding_members.*',
+            DB::raw('`points` + `start_points` AS all_points'),
+            DB::raw('`work_units` + `start_work_units` AS all_work_units')
+        ]);
+
+        // latest row
+        $query->where('period_type', '=', FoldingStat::PERIOD_HOURLY);
+        $subquery = '(select MAX(fs2.start_date) from folding_stats AS fs2 where fs2.member_id = folding_stats.member_id)';
+        $query->where('start_date', '=', DB::raw($subquery));
+
+        $query->join('folding_members', 'folding_stats.member_id', '=', 'folding_members.id');
+
+        return $query->get();
+    }
+
+    protected function findAllMemberWeekAndDayStats()
     {
         $query = DB::table('folding_members');
-
-        // all stats
-        $start_date = Carbon::parse(env('STATS_BEGIN_DATE'));
-        $all_stats_query = DB::table('folding_stats')
-            ->select([
-                'member_id',
-                DB::raw('SUM(points) AS points'),
-                DB::raw('SUM(work_units) AS work_units'),
-            ])
-            ->where('start_date', '>=', $start_date)
-            ->where('period_type', '=', FoldingStat::PERIOD_DAILY)
-            ->groupBy('member_id');
-        $query->leftJoinSub($all_stats_query, 'all_stats', function ($join) {
-            $join->on('folding_members.id', '=', 'all_stats.member_id');
-        });
 
         // week stats
         $start_date = Carbon::now()->startOfDay()->subDays(6);
@@ -194,9 +226,6 @@ class MemberAggregateStatRepository
 
         $query->select([
             'folding_members.*',
-
-            'all_stats.points AS all_points',
-            'all_stats.work_units AS all_work_units',
 
             'week_stats.points AS week_points',
             'week_stats.work_units AS week_work_units',

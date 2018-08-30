@@ -22,6 +22,9 @@ class CreateFoldingStatsTable extends Migration
             $table->bigInteger('points')->default(0);
             $table->integer('work_units')->default(0);
 
+            $table->bigInteger('start_points')->default(0);
+            $table->integer('start_work_units')->default(0);
+
             $table->timestamp('start_date')->nullable();
             $table->tinyInteger('period_type');
 

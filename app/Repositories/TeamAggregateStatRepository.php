@@ -166,6 +166,7 @@ class TeamAggregateStatRepository
         $query->select([
             'folding_teams.number',
             'folding_teams.name',
+            'folding_teams.name_lc',
 
             'all_stats.points AS all_points',
             'all_stats.work_units AS all_work_units',

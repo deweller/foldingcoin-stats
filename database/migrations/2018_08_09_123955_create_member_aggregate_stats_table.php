@@ -16,6 +16,7 @@ class CreateMemberAggregateStatsTable extends Migration
         Schema::create('member_aggregate_stats', function (Blueprint $table) {
             $table->string('user_name', 80)->unique();
             $table->string('friendly_name')->index();
+            $table->string('friendly_name_lc')->index();
             $table->string('bitcoin_address')->index();
             
             $table->bigInteger('all_points')->default(0)->index();

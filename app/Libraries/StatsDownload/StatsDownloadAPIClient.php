@@ -3,6 +3,7 @@
 namespace App\Libraries\StatsDownload;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Tokenly\APIClient\Exception\APIException;
 use Tokenly\APIClient\TokenlyAPI;
 
@@ -14,7 +15,11 @@ class StatsDownloadAPIClient extends TokenlyAPI
 
     public function getTeams()
     {
-        $teams_data = $this->getPublic('/GetTeams');
+        // $teams_data = $this->getPublic('/GetTeams');
+        $teams_data = $this->call('GET', '/GetTeams', [], [
+            'public' => true,
+            'timeout' => 90,
+        ]);
         return $teams_data;
     }
 
@@ -31,7 +36,13 @@ class StatsDownloadAPIClient extends TokenlyAPI
             'endDate' => $end_date->format($format),
         ];
 
-        $stats_data = $this->getPublic('/GetMemberStats', $params);
+        // $stats_data = $this->getPublic('/GetMemberStats', $params);
+        Log::debug("begin /GetMemberStats");
+        $stats_data = $this->call('GET', '/GetMemberStats', $params, [
+            'public' => true,
+            'timeout' => 90,
+        ]);
+        Log::debug("end /GetMemberStats");
 
         // also return params
         $stats_data['params'] = $params;
