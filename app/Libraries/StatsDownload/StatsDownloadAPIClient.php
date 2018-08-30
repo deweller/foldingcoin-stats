@@ -37,12 +37,12 @@ class StatsDownloadAPIClient extends TokenlyAPI
         ];
 
         // $stats_data = $this->getPublic('/GetMemberStats', $params);
-        Log::debug("begin /GetMemberStats");
+        Log::debug("begin /GetMemberStats ".json_encode($params, 192));
         $stats_data = $this->call('GET', '/GetMemberStats', $params, [
             'public' => true,
             'timeout' => 90,
         ]);
-        Log::debug("end /GetMemberStats");
+        Log::debug("end /GetMemberStats count: ".count($stats_data['members']));
 
         // also return params
         $stats_data['params'] = $params;
