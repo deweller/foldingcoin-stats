@@ -179,12 +179,13 @@ class MemberAggregateStatRepository
             DB::raw('`work_units` + `start_work_units` AS all_work_units')
         ]);
 
-        // latest row
-        $query->where('period_type', '=', FoldingStat::PERIOD_HOURLY);
+        // latest entry of any kind
         $subquery = '(select MAX(fs2.start_date) from folding_stats AS fs2 where fs2.member_id = folding_stats.member_id)';
         $query->where('start_date', '=', DB::raw($subquery));
 
         $query->join('folding_members', 'folding_stats.member_id', '=', 'folding_members.id');
+
+        Log::debug("\$query->->toSql()\n" . $query->toSql());
 
         return $query->get();
     }
