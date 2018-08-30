@@ -42,7 +42,7 @@
                         <th><a @click="pager.toggleSort('userName', 'asc')" href="#sort">
                             <i v-if="paging.sort == 'userName'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             Username</a></th>
-                        <th>Address</th>
+                        <th class="d-none d-md-block">Address</th>
                         <th><a @click="pager.toggleSort('dayPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'dayPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             24h Points</a></th>
@@ -57,8 +57,15 @@
 
                 <tbody>
                     <tr v-for="member in members">
-                        <td><a :href="'/member/'+member.userName">{{ member.friendlyName }}</a></td>
-                        <td><span :title="member.bitcoinAddress">{{ member.bitcoinAddress | shortbitcoinaddress }}</span></td>
+                        <td><a :href="'/member/'+member.userName">
+                            <span class="d-block d-md-none text-truncate" style="max-width: 120px;">
+                                {{ member.friendlyName }}
+                            </span>
+                            <span class="d-none d-md-block text-truncate" style="max-width: 160px;">
+                                {{ member.friendlyName }}
+                            </span>
+                        </a></td>
+                        <td class="d-none d-md-block"><span :title="member.bitcoinAddress">{{ member.bitcoinAddress | shortbitcoinaddress }}</span></td>
 
                         <td>{{ member.dayPoints | points }}</td>
                         <td>{{ member.weekPoints | points }}</td>
