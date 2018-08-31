@@ -34,6 +34,14 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <div class="mt-2">
+                <a target="_blank" :href="'https://stats.foldingathome.org/team/'+team.number" class="ml-1">
+                    <i class="fa fa-external-link-alt"></i>
+                    Folding@Home Team Information
+                </a>
+                </div>
+
             </div>
 
             <div class="col-md-6">
