@@ -23420,6 +23420,9 @@ var Pager = __webpack_require__(141);
         },
         doSearch: function doSearch() {
             var vars = {};
+
+            this.reformatUsernameSearchFields();
+
             if (this.searchUsername.length > 0) {
                 vars.userName = this.searchUsername;
             }
@@ -23433,6 +23436,15 @@ var Pager = __webpack_require__(141);
             this.searchUsername = '';
             this.searchBitcoinAddress = '';
             this.pager.search({});
+        },
+        reformatUsernameSearchFields: function reformatUsernameSearchFields() {
+            // check for FriendlyName_TAG_BitcoinAddress format
+            var re = new RegExp('([^_]+)_([^_]+)_([^_]+)');
+            var matches = re.exec('' + this.searchUsername);
+            if (matches != null) {
+                this.searchUsername = matches[1];
+                this.searchBitcoinAddress = matches[3];
+            }
         }
     },
 
@@ -25059,6 +25071,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 var Pager = __webpack_require__(141);
 
@@ -25176,6 +25196,27 @@ var render = function() {
                     ])
                   ])
                 ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mt-2" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "ml-1",
+                    attrs: {
+                      target: "_blank",
+                      href:
+                        "https://stats.foldingathome.org/team/" +
+                        _vm.team.number
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-external-link-alt" }),
+                    _vm._v(
+                      "\n                Folding@Home Team Information\n            "
+                    )
+                  ]
+                )
               ])
             ]),
             _vm._v(" "),

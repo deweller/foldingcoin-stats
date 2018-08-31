@@ -166,6 +166,9 @@
 
             doSearch() {
                 let vars = {}
+
+                this.reformatUsernameSearchFields()
+
                 if (this.searchUsername.length > 0) {
                     vars.userName = this.searchUsername
                 }
@@ -180,6 +183,16 @@
                 this.searchUsername = ''
                 this.searchBitcoinAddress = ''
                 this.pager.search({})
+            },
+
+            reformatUsernameSearchFields() {
+                // check for FriendlyName_TAG_BitcoinAddress format
+                let re = new RegExp('([^_]+)_([^_]+)_([^_]+)');
+                let matches = re.exec(''+this.searchUsername)
+                if (matches != null) {
+                    this.searchUsername = matches[1]
+                    this.searchBitcoinAddress = matches[3]
+                }
             }
         },
 
