@@ -20,6 +20,7 @@
                             <td><strong>Team Number</strong></td>
                             <td>{{ team.number }}</td>
                         </tr>
+
                         <tr>
                             <td><strong>All Time Points</strong></td>
                             <td>{{ team.allPoints | points }}</td>
@@ -32,6 +33,20 @@
                             <td><strong>Points in Last 24 hours</strong></td>
                             <td>{{ team.dayPoints | points }}</td>
                         </tr>
+
+                        <tr>
+                            <td><strong>All Time Work Units</strong></td>
+                            <td>{{ team.allWorkUnits | points }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Work Units this Week</strong></td>
+                            <td>{{ team.weekWorkUnits | points }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Work Units in Last 24 hours</strong></td>
+                            <td>{{ team.dayWorkUnits | points }}</td>
+                        </tr>
+
                     </tbody>
                 </table>
 

@@ -6,7 +6,7 @@
 
 
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <h4 class="mb-3"><i class="fa fa-user mr-2"></i> Information for {{ member.friendlyName }}</h4>
                 <table class="table table-sm table-striped">
                     <thead>
@@ -31,6 +31,19 @@
                         <tr>
                             <td><strong>Points in Last 24 hours</strong></td>
                             <td>{{ member.dayPoints | points }}</td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>All Time Work Units</strong></td>
+                            <td>{{ member.allWorkUnits | points }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Work Units this Week</strong></td>
+                            <td>{{ member.weekWorkUnits | points }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Work Units in Last 24 hours</strong></td>
+                            <td>{{ member.dayWorkUnits | points }}</td>
                         </tr>
                     </tbody>
                 </table>

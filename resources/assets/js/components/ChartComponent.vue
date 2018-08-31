@@ -12,7 +12,9 @@
               <button @click="zoom='all'" type="button" v-bind:class="btnClass('all')">All Time</button>
               <button @click="zoom='30d'" type="button" v-bind:class="btnClass('30d')">30 Days</button>
               <button @click="zoom='7d'" type="button" v-bind:class="btnClass('7d')">7 Days</button>
+              <!-- 
               <button @click="zoom='24h'" type="button" v-bind:class="btnClass('24h')">24 Hours</button>
+               -->
             </div>
         </div>
     </div>
