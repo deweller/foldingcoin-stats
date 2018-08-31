@@ -24,12 +24,13 @@ class MembersController extends ApiController
 
     public function membersForTeam($team_number, Request $request, MemberAggregateStatRepository $member_aggregate_stat_repository)
     {
-        $member_stats = $member_aggregate_stat_repository->findByTeam($team_number);
+        $filter = IndexRequestFilter::createFromRequest($request, $this->buildMembersForTeamFilterDefinition());
+        $member_stats = $member_aggregate_stat_repository->findByTeam($team_number, $filter);
 
         $serialized_members = $this->serializeMemberStats($member_stats);
 
         return $this->buildJSONResponse(
-            $this->buidPagedItemList($serialized_members, $_page_offset=0, $_limit=100, count($serialized_members))
+            $this->buidPagedItemList($serialized_members, $filter->used_page_offset, $filter->used_limit, $filter->getCountForPagination())
         );
     }
 
@@ -37,7 +38,7 @@ class MembersController extends ApiController
     {
         $rank_type = 'all';
         $rank_start = 1;
-        $rank_end = 5;
+        $rank_end = max(1, min(100, intval($request->input('end', 5))));
         $member_stats = $member_aggregate_stat_repository->findByRankRange($rank_type, $rank_start, $rank_end);
 
         $serialized_members = $this->serializeMemberStats($member_stats);
@@ -72,6 +73,25 @@ class MembersController extends ApiController
     }
 
     protected function buildFilterDefinition()
+    {
+        return [
+            'fields' => [
+                'userName' => ['field' => 'friendly_name_lc', 'sortField' => 'friendly_name', 'defaultSortDirection' => 'asc', 'assumeLike' => true, 'transformFn' => ['Tokenly\LaravelApiProvider\Filter\Transformers','LCTrimmed'],],
+                'bitcoinAddress' => ['field' => 'bitcoin_address',],
+                'allPoints' => ['sortField' => 'all_points', 'defaultSortDirection' => 'desc'],
+                'weekPoints' => ['sortField' => 'week_points', 'defaultSortDirection' => 'desc'],
+                'dayPoints' => ['sortField' => 'day_points', 'defaultSortDirection' => 'desc'],
+            ],
+            'limit' => [
+                'field' => 'limit', // optional
+                'max' => 100, // optional
+                'pagingField' => 'pg', // optional
+            ],
+            'defaults' => ['sort' => 'allPoints'],
+        ];
+    }
+
+    protected function buildMembersForTeamFilterDefinition()
     {
         return [
             'fields' => [

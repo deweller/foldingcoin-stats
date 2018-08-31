@@ -125,7 +125,7 @@ class MemberAggregateStatRepository
         return $query->get();
     }
 
-    public function findByTeam($team_number)
+    public function findByTeam($team_number, RequestFilter $filter)
     {
         $query = DB::table('member_aggregate_stats')->select();
 
@@ -133,8 +133,12 @@ class MemberAggregateStatRepository
         $query->join('folding_members', 'member_aggregate_stats.user_name', '=', 'folding_members.user_name');
         $query->where('folding_members.team_number', '=', $team_number);
 
+        $filter->filter($query);
+        $filter->limit($query);
+        $filter->sort($query);
+
         // sort by points
-        $query->orderBy('all_points', 'desc');
+        // $query->orderBy('all_points', 'desc');
 
         return $query->get();
     }

@@ -42,6 +42,9 @@
                             <a class="nav-link navbar__nav-link--strong" href="{{ route('teams.index') }}"><i class="fas fa-xs fa-people-carry"></i> {{ __('Teams') }}</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link navbar__nav-link--strong" target="_blank" href="https://mergedfolding.net"><i class="fas fa-xs fa-users-cog"></i> {{ __('Merged Folding') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link navbar__nav-link--strong" target="_blank" href="https://foldingcoin.net"><i class="fas fa-xs fa-link"></i> {{ __('About FoldingCoin') }}</a>
                         </li>
 

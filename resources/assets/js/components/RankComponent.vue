@@ -61,6 +61,7 @@
             rankUrl: String,
             rankType: String,
             rankLabel: String,
+            limit: String,
         },
 
         data() {
@@ -80,8 +81,10 @@
             async loadRankings() {
                 this.loading = true
 
-                let params = {}
-                console.log('this.rankUrl', this.rankUrl);
+                let params = {
+                    end: this.limit || 5
+                }
+                // console.log('this.rankUrl', this.rankUrl);
                 let response = await this.$request.get(this.rankUrl, {params}, this.setError)
                 this.results = response.items
 

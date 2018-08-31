@@ -22937,7 +22937,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     props: {
         rankUrl: String,
         rankType: String,
-        rankLabel: String
+        rankLabel: String,
+        limit: String
     },
 
     data: function data() {
@@ -22963,13 +22964,14 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             case 0:
                                 this.loading = true;
 
-                                params = {};
-
-                                console.log('this.rankUrl', this.rankUrl);
-                                _context.next = 5;
+                                params = {
+                                    end: this.limit || 5
+                                    // console.log('this.rankUrl', this.rankUrl);
+                                };
+                                _context.next = 4;
                                 return this.$request.get(this.rankUrl, { params: params }, this.setError);
 
-                            case 5:
+                            case 4:
                                 response = _context.sent;
 
                                 this.results = response.items;
@@ -22977,8 +22979,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 this.loading = false;
                                 this.loaded = true;
 
-                            case 9:
-                            case 'end':
+                            case 8:
+                            case "end":
                                 return _context.stop();
                         }
                     }
@@ -23002,7 +23004,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             this.loadRankings();
 
                         case 1:
-                        case 'end':
+                        case "end":
                             return _context2.stop();
                     }
                 }
@@ -24850,12 +24852,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 //
 //
 //
@@ -24938,6 +24934,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 
+var Pager = __webpack_require__(141);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -24946,6 +24943,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     data: function data() {
         return {
             errorMsg: null,
+
+            paging: {},
 
             team: {},
             members: [],
@@ -24958,49 +24957,34 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         setError: function setError(errorMsg) {
             this.errorMsg = errorMsg;
         },
-        loadTeamMembers: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var params, response;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                this.loading = true;
-
-                                params = {};
-                                _context.next = 4;
-                                return this.$request.get('/api/v1/team/' + this.team.number + '/members', { params: params }, this.setError);
-
-                            case 4:
-                                response = _context.sent;
-
-                                this.members = response.items;
-                                console.log('this.members', this.members);
-
-                                this.loading = false;
-                                this.loaded = true;
-
-                            case 9:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function loadTeamMembers() {
-                return _ref.apply(this, arguments);
-            }
-
-            return loadTeamMembers;
-        }()
+        onLoad: function onLoad() {
+            this.loading = true;
+        },
+        onLoadComplete: function onLoadComplete(members, paging) {
+            this.members = members;
+            this.paging = paging;
+            this.loading = false;
+        }
     },
 
     mounted: function mounted() {
         // console.log('this.teamData', this.teamData);
         this.team = JSON.parse(this.teamData);
-        this.loadTeamMembers();
+        // this.loadTeamMembers()
         // console.log('this.team', this.team);
+
+        this.pager = Pager.init({
+            onLoad: this.onLoad,
+            onLoadComplete: this.onLoadComplete,
+            onError: this.setError,
+            request: this.$request,
+
+            url: '/api/v1/team/' + this.team.number + '/members',
+            defaultSort: 'allPoints',
+            defaultSortDirection: 'desc',
+            perPage: 10
+        });
+        this.pager.load();
     }
 });
 

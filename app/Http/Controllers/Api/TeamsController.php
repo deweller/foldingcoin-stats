@@ -35,7 +35,7 @@ class TeamsController extends ApiController
     {
         $rank_type = 'all';
         $rank_start = 1;
-        $rank_end = 5;
+        $rank_end = max(1, min(100, intval($request->input('end', 5))));
         $team_stats = $team_aggregate_stat_repository->findByRankRange($rank_type, $rank_start, $rank_end);
 
         $serialized_teams = [];

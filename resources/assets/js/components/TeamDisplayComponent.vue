@@ -80,6 +80,7 @@
 </template>
 
 <script>
+    let Pager = require('../lib/Pager')
 
     export default {
         props: {
@@ -88,6 +89,8 @@
         data() {
             return {
                 errorMsg: null,
+
+                paging: {},
 
                 team: {},
                 members: [],
@@ -100,24 +103,47 @@
                 this.errorMsg = errorMsg
             },
 
-            async loadTeamMembers() {
+            onLoad() {
                 this.loading = true
-
-                let params = {}
-                let response = await this.$request.get('/api/v1/team/'+this.team.number+'/members', {params}, this.setError)
-                this.members = response.items
-                console.log('this.members', this.members);
-
-                this.loading = false
-                this.loaded = true
             },
+            onLoadComplete(members, paging) {
+                this.members = members
+                this.paging = paging
+                this.loading = false
+            },
+
+
+            // async loadTeamMembers() {
+            //     this.loading = true
+
+            //     let params = {}
+            //     let response = await this.$request.get('/api/v1/team/'+this.team.number+'/members', {params}, this.setError)
+            //     this.members = response.items
+            //     console.log('this.members', this.members);
+
+            //     this.loading = false
+            //     this.loaded = true
+            // },
         },
 
         mounted: function() {
             // console.log('this.teamData', this.teamData);
             this.team = JSON.parse(this.teamData)
-            this.loadTeamMembers()
+            // this.loadTeamMembers()
             // console.log('this.team', this.team);
+
+            this.pager = Pager.init({
+                onLoad: this.onLoad,
+                onLoadComplete: this.onLoadComplete,
+                onError: this.setError,
+                request: this.$request,
+
+                url: '/api/v1/team/'+this.team.number+'/members',
+                defaultSort: 'allPoints',
+                defaultSortDirection: 'desc',
+                perPage: 10,
+            })
+            this.pager.load()
         }
     }
 
