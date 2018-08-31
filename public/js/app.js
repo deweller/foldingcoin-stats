@@ -23331,11 +23331,43 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var Pager = __webpack_require__(141);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        apiUrl: String,
+        perPage: String,
+        compact: {
+            type: Boolean,
+            default: false
+        }
+    },
     data: function data() {
         return {
             errorMsg: null,
@@ -23416,10 +23448,10 @@ var Pager = __webpack_require__(141);
                                 onError: this.setError,
                                 request: this.$request,
 
-                                url: '/api/v1/members',
+                                url: this.apiUrl,
                                 defaultSort: 'allPoints',
                                 defaultSortDirection: 'desc',
-                                perPage: 100
+                                perPage: this.perPage
                             });
 
                             this.loadMemberData();
@@ -23459,128 +23491,231 @@ var render = function() {
             "div",
             { class: { loading: _vm.loading } },
             [
-              _c("h3", [_vm._v("FoldingCoin Participants")]),
-              _vm._v(" "),
-              _c(
-                "form",
-                {
-                  staticClass: "mt-4 mb-2",
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.doSearch($event)
-                    }
-                  }
-                },
-                [
-                  _c("h5", [_vm._v("Filter Results")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-row align-items-center" }, [
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "sr-only",
-                          attrs: { for: "SearchUsername" }
-                        },
-                        [_vm._v("Username")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "input-group mb-2" }, [
-                        _vm._m(0),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.searchUsername,
-                              expression: "searchUsername"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "SearchUsername",
-                            placeholder: ""
-                          },
-                          domProps: { value: _vm.searchUsername },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.searchUsername = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "sr-only",
-                          attrs: { for: "SearchBitcoinAddress" }
-                        },
-                        [_vm._v("Bitcoin Address")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "input-group mb-2" }, [
-                        _vm._m(1),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.searchBitcoinAddress,
-                              expression: "searchBitcoinAddress"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "SearchBitcoinAddress",
-                            placeholder: ""
-                          },
-                          domProps: { value: _vm.searchBitcoinAddress },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.searchBitcoinAddress = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-fldcdarkred mb-2",
-                          attrs: { type: "submit" }
-                        },
-                        [_vm._v("Search")]
-                      ),
+              !_vm.compact
+                ? _c(
+                    "form",
+                    {
+                      staticClass: "mt-4 mb-2",
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.doSearch($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("h5", [_vm._v("Filter Results")]),
                       _vm._v(" "),
                       _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary mb-2",
-                          attrs: { type: "button" },
-                          on: { click: _vm.clearSearch }
-                        },
-                        [_vm._v("Clear Search")]
+                        "div",
+                        { staticClass: "form-row align-items-center" },
+                        [
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "SearchUsername" }
+                              },
+                              [_vm._v("Username")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group mb-2" }, [
+                              _vm._m(0),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.searchUsername,
+                                    expression: "searchUsername"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: "SearchUsername",
+                                  placeholder: ""
+                                },
+                                domProps: { value: _vm.searchUsername },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.searchUsername = $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-5" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "SearchBitcoinAddress" }
+                              },
+                              [_vm._v("Bitcoin Address")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "input-group mb-2" }, [
+                              _vm._m(1),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.searchBitcoinAddress,
+                                    expression: "searchBitcoinAddress"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: "SearchBitcoinAddress",
+                                  placeholder: ""
+                                },
+                                domProps: { value: _vm.searchBitcoinAddress },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.searchBitcoinAddress =
+                                      $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-fldcdarkred mb-2",
+                                attrs: { type: "submit" }
+                              },
+                              [_vm._v("Search")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-secondary mb-2",
+                                attrs: { type: "button" },
+                                on: { click: _vm.clearSearch }
+                              },
+                              [_vm._v("Clear Search")]
+                            )
+                          ])
+                        ]
                       )
-                    ])
-                  ])
-                ]
-              ),
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.compact
+                ? _c(
+                    "form",
+                    {
+                      staticClass: "mt-2 mb-1",
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.doSearch($event)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "form-row align-items-center" },
+                        [
+                          _c("div", { staticClass: "col-8" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "sr-only",
+                                attrs: { for: "SearchUsername" }
+                              },
+                              [_vm._v("Username")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "input-group input-group-sm mb-2"
+                              },
+                              [
+                                _vm._m(2),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.searchUsername,
+                                      expression: "searchUsername"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    id: "SearchUsername",
+                                    placeholder: ""
+                                  },
+                                  domProps: { value: _vm.searchUsername },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.searchUsername = $event.target.value
+                                    }
+                                  }
+                                })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-4" }, [
+                            _c(
+                              "div",
+                              { staticClass: "input-group input-group-sm" },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-sm btn-fldcdarkred mb-2 mr-1",
+                                    attrs: { type: "submit" }
+                                  },
+                                  [_vm._v("Search")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-sm btn-secondary mb-2",
+                                    attrs: { type: "button" },
+                                    on: { click: _vm.clearSearch }
+                                  },
+                                  [_vm._v("Clear")]
+                                )
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _vm.members.length > 0
                 ? _c("table", { staticClass: "table table-sm" }, [
@@ -23614,9 +23749,11 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("th", { staticClass: "d-none d-md-block" }, [
-                          _vm._v("Address")
-                        ]),
+                        !_vm.compact
+                          ? _c("th", { staticClass: "d-none d-md-block" }, [
+                              _vm._v("Address")
+                            ])
+                          : _vm._e(),
                         _vm._v(" "),
                         _c("th", [
                           _c(
@@ -23748,21 +23885,23 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("td", { staticClass: "d-none d-md-block" }, [
-                            _c(
-                              "span",
-                              { attrs: { title: member.bitcoinAddress } },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm._f("shortbitcoinaddress")(
-                                      member.bitcoinAddress
+                          !_vm.compact
+                            ? _c("td", { staticClass: "d-none d-md-block" }, [
+                                _c(
+                                  "span",
+                                  { attrs: { title: member.bitcoinAddress } },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("shortbitcoinaddress")(
+                                          member.bitcoinAddress
+                                        )
+                                      )
                                     )
-                                  )
+                                  ]
                                 )
-                              ]
-                            )
-                          ]),
+                              ])
+                            : _vm._e(),
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(_vm._s(_vm._f("points")(member.dayPoints)))
@@ -23823,6 +23962,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-prepend" }, [
       _c("div", { staticClass: "input-group-text" }, [_vm._v("Address")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("div", { staticClass: "input-group-text" }, [_vm._v("Username")])
     ])
   }
 ]
@@ -23985,9 +24132,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        console.log('this.memberData', this.memberData);
         this.member = JSON.parse(this.memberData);
-        console.log('this.member', this.member);
     }
 });
 
@@ -24914,25 +25059,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var Pager = __webpack_require__(141);
 
@@ -24984,7 +25110,7 @@ var Pager = __webpack_require__(141);
             defaultSortDirection: 'desc',
             perPage: 10
         });
-        this.pager.load();
+        // this.pager.load()
     }
 });
 
@@ -25053,68 +25179,28 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("h4", { staticClass: "mb-3" }, [
-                _c("i", { staticClass: "fa fa-users mr-2" }),
-                _vm._v(" Members in team " + _vm._s(_vm.team.name))
-              ]),
-              _vm._v(" "),
-              _vm.members.length > 0
-                ? _c("table", { staticClass: "table table-sm" }, [
-                    _vm._m(5),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.members, function(member) {
-                        return _c("tr", [
-                          _c("td", [
-                            _c(
-                              "a",
-                              { attrs: { href: "/member/" + member.userName } },
-                              [_vm._v(_vm._s(member.friendlyName))]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "span",
-                              { attrs: { title: member.bitcoinAddress } },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm._f("shortbitcoinaddress")(
-                                      member.bitcoinAddress
-                                    )
-                                  )
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(_vm._s(_vm._f("points")(member.dayPoints)))
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(_vm._s(_vm._f("points")(member.weekPoints)))
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(_vm._s(_vm._f("points")(member.allPoints)))
-                          ])
-                        ])
-                      })
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.members.length == 0
-                ? _c("div", {}, [_c("p", [_vm._v("No members found.")])])
-                : _vm._e()
-            ])
+            _c(
+              "div",
+              { staticClass: "col-md-6" },
+              [
+                _c("h4", { staticClass: "mb-3" }, [
+                  _c("i", { staticClass: "fa fa-users mr-2" }),
+                  _vm._v(" Members in team " + _vm._s(_vm.team.name))
+                ]),
+                _vm._v(" "),
+                _c("member-list", {
+                  attrs: {
+                    "api-url": "/api/v1/team/" + _vm.team.number + "/members",
+                    compact: true,
+                    "per-page": "10"
+                  }
+                })
+              ],
+              1
+            )
           ]),
           _vm._v(" "),
-          _c("h2", { staticClass: "mt-3" }, [_vm._v("Points")]),
+          _c("h2", { staticClass: "mt-3" }, [_vm._v("Team Points")]),
           _vm._v(" "),
           _c("chart-component", {
             attrs: {
@@ -25157,24 +25243,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("td", [_c("strong", [_vm._v("Points in Last 24 hours")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Username")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Address")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("24h Points")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("7d Points")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Total Points")])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -25290,7 +25358,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         pagesList: function pagesList() {
             var pagesList = [];
 
-            var maxPagesToShow = this.maxPagesToShow || 9;
+            var maxPagesToShow = this.maxPagesToShow || 10;
 
             // calculate start and end
             var start = 1;
@@ -25328,7 +25396,7 @@ var render = function() {
         _c("nav", { attrs: { "aria-label": "Page navigation" } }, [
           _c(
             "ul",
-            { staticClass: "pagination justify-content-center" },
+            { staticClass: "pagination pagination-sm justify-content-center" },
             [
               _c(
                 "li",

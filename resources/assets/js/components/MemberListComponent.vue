@@ -5,13 +5,16 @@
             :errormsg="errorMsg"
         ></error-panel>
 
-        <div :class="{loading: loading}" v-if="members.length > 0 || loading || paging.isSearch">
-            <h3>FoldingCoin Participants</h3>
-
-            <form @submit.prevent="doSearch" class="mt-4 mb-2">
+        <div 
+            v-if="members.length > 0 || loading || paging.isSearch"
+            :class="{loading: loading}"
+        >
+            <form
+                v-if="!compact"
+                @submit.prevent="doSearch" class="mt-4 mb-2">
                 <h5>Filter Results</h5>
                 <div class="form-row align-items-center">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label class="sr-only" for="SearchUsername">Username</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
@@ -20,7 +23,7 @@
                             <input v-model="searchUsername" type="text" class="form-control" id="SearchUsername" placeholder="">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label class="sr-only" for="SearchBitcoinAddress">Bitcoin Address</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
@@ -35,6 +38,27 @@
                     </div>
                 </div>
             </form>
+            <form
+                v-if="compact"
+                @submit.prevent="doSearch" class="mt-2 mb-1">
+                <div class="form-row align-items-center">
+                    <div class="col-8">
+                        <label class="sr-only" for="SearchUsername">Username</label>
+                        <div class="input-group input-group-sm mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Username</div>
+                            </div>
+                            <input v-model="searchUsername" type="text" class="form-control" id="SearchUsername" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-group input-group-sm">
+                            <button type="submit" class="btn btn-sm btn-fldcdarkred mb-2 mr-1">Search</button>
+                            <button @click="clearSearch" type="button" class="btn btn-sm btn-secondary mb-2">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
             <table v-if="members.length > 0" class="table table-sm">
                 <thead>
@@ -42,7 +66,7 @@
                         <th><a @click="pager.toggleSort('userName', 'asc')" href="#sort">
                             <i v-if="paging.sort == 'userName'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             Username</a></th>
-                        <th class="d-none d-md-block">Address</th>
+                        <th v-if="!compact" class="d-none d-md-block">Address</th>
                         <th><a @click="pager.toggleSort('dayPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'dayPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             24h Points</a></th>
@@ -65,7 +89,7 @@
                                 {{ member.friendlyName }}
                             </span>
                         </a></td>
-                        <td class="d-none d-md-block"><span :title="member.bitcoinAddress">{{ member.bitcoinAddress | shortbitcoinaddress }}</span></td>
+                        <td v-if="!compact" class="d-none d-md-block"><span :title="member.bitcoinAddress">{{ member.bitcoinAddress | shortbitcoinaddress }}</span></td>
 
                         <td>{{ member.dayPoints | points }}</td>
                         <td>{{ member.weekPoints | points }}</td>
@@ -95,6 +119,14 @@
     let Pager = require('../lib/Pager')
 
     export default {
+        props: {
+            apiUrl: String,
+            perPage: String,
+            compact: {
+                type: Boolean,
+                default: false
+            }
+        },
         data() {
             return {
                 errorMsg: null,
@@ -158,10 +190,10 @@
                 onError: this.setError,
                 request: this.$request,
 
-                url: '/api/v1/members',
+                url: this.apiUrl,
                 defaultSort: 'allPoints',
                 defaultSortDirection: 'desc',
-                perPage: 100,
+                perPage: this.perPage,
             })
 
 

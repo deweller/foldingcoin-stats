@@ -38,37 +38,18 @@
 
             <div class="col-md-6">
                 <h4 class="mb-3"><i class="fa fa-users mr-2"></i> Members in team {{ team.name }}</h4>
-                <table v-if="members.length > 0" class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Address</th>
-                            <th>24h Points</th>
-                            <th>7d Points</th>
-                            <th>Total Points</th>
-                        </tr>
-                    </thead>
 
-                    <tbody>
-                        <tr v-for="member in members">
-                            <td><a :href="'/member/'+member.userName">{{ member.friendlyName }}</a></td>
-                            <td><span :title="member.bitcoinAddress">{{ member.bitcoinAddress | shortbitcoinaddress }}</span></td>
-                            <td>{{ member.dayPoints | points }}</td>
-                            <td>{{ member.weekPoints | points }}</td>
-                            <td>{{ member.allPoints | points }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div v-if="members.length == 0" class="">
-                    <p>No members found.</p>
-                </div>
-            </table>
+                <member-list
+                    :api-url="'/api/v1/team/' + team.number + '/members'"
+                    :compact="true"
+                    per-page="10"
+                ></member-list>
             </div>
 
         </div>
 
         <!-- team chart -->
-        <h2 class="mt-3">Points</h2>
+        <h2 class="mt-3">Team Points</h2>
         <chart-component
             :stats-url="'/api/v1/stats/team/'+team.number"
             :y-axis-title="'Daily points for ' + team.name"
@@ -143,7 +124,7 @@
                 defaultSortDirection: 'desc',
                 perPage: 10,
             })
-            this.pager.load()
+            // this.pager.load()
         }
     }
 

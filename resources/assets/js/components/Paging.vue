@@ -1,7 +1,7 @@
 <template>
     <div v-if="paging.pageCount > 1">
         <nav aria-label="Page navigation">
-          <ul class="pagination justify-content-center">
+          <ul class="pagination pagination-sm justify-content-center">
             <li :class="{'page-item': true, 'disabled': !paging.hasPrevious}">
                 <a @click.prevent="pager.prevPage()" class="page-link" href="#previous-page" tabindex="-1">«</a>
             </li>
@@ -34,7 +34,7 @@
             pagesList() {
                 let pagesList = []
 
-                let maxPagesToShow = this.maxPagesToShow || 9
+                let maxPagesToShow = this.maxPagesToShow || 10
 
                 // calculate start and end
                 let start = 1

@@ -92,9 +92,7 @@
         },
 
         mounted: function() {
-            console.log('this.memberData', this.memberData);
             this.member = JSON.parse(this.memberData)
-            console.log('this.member', this.member);
         }
     }
 
