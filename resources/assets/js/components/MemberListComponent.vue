@@ -66,7 +66,7 @@
                         <th><a @click="pager.toggleSort('userName', 'asc')" href="#sort">
                             <i v-if="paging.sort == 'userName'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             Username</a></th>
-                        <th v-if="!compact" class="d-none d-md-block">Address</th>
+                        <th>Address</th>
                         <!--<th><a @click="pager.toggleSort('dayPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'dayPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             24h Points</a></th>-->
@@ -89,7 +89,7 @@
                                 {{ member.friendlyName }}
                             </span>
                         </a></td>
-                        <td v-if="!compact" class="d-none d-md-block"><span :title="member.bitcoinAddress">{{ member.bitcoinAddress | shortbitcoinaddress }}</span></td>
+                        <td><span :title="member.bitcoinAddress">{{ member.bitcoinAddress | shortbitcoinaddress }}</span></td>
 
                         <!--<td>{{ member.dayPoints | points }}</td>-->
                         <td>{{ member.weekPoints | points }}</td>
