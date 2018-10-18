@@ -67,9 +67,9 @@
                             <i v-if="paging.sort == 'userName'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             Username</a></th>
                         <th v-if="!compact" class="d-none d-md-block">Address</th>
-                        <th style="display: none;"><a @click="pager.toggleSort('dayPoints', 'desc')" href="#sort">
+                        <!--<th><a @click="pager.toggleSort('dayPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'dayPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
-                            24h Points</a></th>
+                            24h Points</a></th>-->
                         <th><a @click="pager.toggleSort('weekPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'weekPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             7d Points</a></th>
@@ -91,7 +91,7 @@
                         </a></td>
                         <td v-if="!compact" class="d-none d-md-block"><span :title="member.bitcoinAddress">{{ member.bitcoinAddress | shortbitcoinaddress }}</span></td>
 
-                        <td style="display: none;">{{ member.dayPoints | points }}</td>
+                        <!--<td>{{ member.dayPoints | points }}</td>-->
                         <td>{{ member.weekPoints | points }}</td>
                         <td>{{ member.allPoints | points }}</td>
                     </tr>
