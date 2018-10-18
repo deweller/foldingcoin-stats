@@ -28,10 +28,10 @@
                             <td><strong>Points this Week</strong></td>
                             <td>{{ member.weekPoints | points }}</td>
                         </tr>
-                        <tr style="display: none;">
+                        <!--<tr>
                             <td><strong>Points in Last 24 hours</strong></td>
                             <td>{{ member.dayPoints | points }}</td>
-                        </tr>
+                        </tr>-->
 
                         <tr>
                             <td><strong>All Time Work Units</strong></td>
@@ -41,10 +41,10 @@
                             <td><strong>Work Units this Week</strong></td>
                             <td>{{ member.weekWorkUnits | points }}</td>
                         </tr>
-                        <tr style="display: none;">
+                        <!--<tr>
                             <td><strong>Work Units in Last 24 hours</strong></td>
                             <td>{{ member.dayWorkUnits | points }}</td>
-                        </tr>
+                        </tr>-->
                     </tbody>
                 </table>
             </div>

@@ -29,10 +29,10 @@
                             <td><strong>Points this Week</strong></td>
                             <td>{{ team.weekPoints | points }}</td>
                         </tr>
-                        <tr style="display: none;">
+                        <!--<tr>
                             <td><strong>Points in Last 24 hours</strong></td>
                             <td>{{ team.dayPoints | points }}</td>
-                        </tr>
+                        </tr>-->
 
                         <tr>
                             <td><strong>All Time Work Units</strong></td>

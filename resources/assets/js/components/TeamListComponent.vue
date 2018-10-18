@@ -45,9 +45,9 @@
                         <th class="d-none d-md-block"><a @click="pager.toggleSort('number', 'asc')" href="#sort">
                             <i v-if="paging.sort == 'number'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             Team Number</a></th>
-                        <th style="display: none;"><a @click="pager.toggleSort('dayPoints', 'desc')" href="#sort">
+                        <!--<th><a @click="pager.toggleSort('dayPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'dayPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
-                            24h Points</a></th>
+                            24h Points</a></th>-->
                         <th class="d-none d-sm-block"><a @click="pager.toggleSort('weekPoints', 'desc')" href="#sort">
                             <i v-if="paging.sort == 'weekPoints'" :class="{fa: true, 'fa-sort-down': paging.sortDirection == 'desc', 'fa-sort-up': paging.sortDirection == 'asc'}"></i> 
                             7d Points</a></th>
@@ -62,7 +62,7 @@
                         <td><a :href="'/team/'+team.number">{{ team.name }}</a></td>
                         <td class="d-none d-md-block"><a :href="'/team/'+team.number">{{ team.number }}</a></td>
 
-                        <td style="display: none;">{{ team.dayPoints | points }}</td>
+                        <!--<td>{{ team.dayPoints | points }}</td>-->
                         <td class="d-none d-sm-block">{{ team.weekPoints | points }}</td>
                         <td>{{ team.allPoints | points }}</td>
                     </tr>
