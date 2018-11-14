@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('stats:sync-teams')->hourlyAt(5);
         $schedule->command('stats:sync-stats', ['--hours' => 40])->hourlyAt(5);
 
-        $schedule->command('stats:sync-stats', ['--all' => true])->dailyAt('12:30')->timezone(config('app.timezone', 'UTC'));
+        $schedule->command('stats:sync-stats', ['--all'])->dailyAt('12:30')->timezone(config('app.timezone', 'UTC'));
     }
 
     /**
