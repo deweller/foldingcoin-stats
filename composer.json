@@ -6,22 +6,62 @@
     "type": "project",
     "require": {
         "php": "^7.1.3",
-        "fideloper/proxy": "^4.0",
-        "laravel/framework": "5.6.*",
+        "fideloper/proxy": "^4",
+        "laravel/framework": "6",
         "laravel/tinker": "^1.0",
-        "laravelcollective/html": "^5.6.0",
-        "tokenly/api-client": "^1.0",
-        "tokenly/fluentd-logger": "^1.2",
-        "tokenly/laravel-api-provider": "^3.3",
-        "tokenly/platform-admin": "^4.0"
+        "laravelcollective/html": "^6",
+        "tokenly/api-client": "dev-master",
+        "tokenly/fluentd-logger": "dev-master",
+        "tokenly/laravel-api-provider": "dev-master",
+        "tokenly/platform-admin": "dev-master",
+        "rogervila/laravel-sqlite-foreign-keys-support": "dev-master",
+    		"laravel/helpers": "^1.1"
     },
     "require-dev": {
-        "filp/whoops": "^2.0",
-        "fzaninotto/faker": "^1.4",
-        "mockery/mockery": "^1.0",
+        "filp/whoops": "^2.7",
+        "fzaninotto/faker": "^1.9",
+        "mockery/mockery": "^1.3",
         "nunomaduro/collision": "^2.0",
         "phpunit/phpunit": "^7.0"
     },
+    "repositories": [
+  		{
+  			"type": "vcs",
+  			"url": "https://github.com/cryptonaut420/laravel-sqlite-foreign-keys-support.git"
+  		},
+  		{
+  			"type": "vcs",
+  			"url": "git@github.com:tokenly/api-client.git"
+  		},
+  		{
+  			"type": "vcs",
+  			"url": "git@github.com:tokenly/hmac-auth.git"
+  		},
+  		{
+  			"type": "vcs",
+  			"url": "git@github.com:tokenly/platform-admin.git"
+  		},
+  		{
+  			"type": "vcs",
+  			"url": "git@github.com:tokenly/laravel-record-lock.git"
+  		},
+  		{
+  			"type": "vcs",
+  			"url": "git@github.com:tokenly/fluentd-logger.git"
+  		},
+  		{
+  			"type": "vcs",
+  			"url": "git@github.com:tokenly/laravel-api-provider.git"
+  		},
+  		{
+  			"type": "vcs",
+  			"url": "git@github.com:tokenly/laravel-event-log.git"
+  		},
+  		{
+  			"type": "vcs",
+  			"url": "git@github.com:tokenly/token-generator.git"
+  		}
+  	],
     "autoload": {
         "classmap": [
             "database/seeds",
